@@ -1,0 +1,41 @@
+<section>
+    {{ partial:partials/centered_text }}
+        {{ slot:ceja }}{{ ceja_de_historia }}{{ /slot:ceja }}
+        {{ slot:encabezado }}{{ encabezado_de_historia }}{{ /slot:encabezado }}
+        {{ texto_de_historia }}
+    {{ /partial:partials/centered_text }}
+   <div class="swiper swiperThumbs max-w-4xl mx-auto px-5 mb-10 md:mb-20">
+        <div class="swiper-wrapper font-bold special-gothic-expanded-one-regular tracking-widest relative">
+            {{ anos }}
+            <div class="swiper-slide flex flex-col items-center justify-center space-y-3 cursor-pointer">
+                <div class="text-center">{{ ano }}</div>
+                <div class="w-7 h-7 bg-slate-500 mx-auto rounded-full relative hover:bg-pgc">
+                    <div class="w-2 h-2 bg-slate-950/30 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"></div>
+                </div>
+            </div>
+            {{ /anos }}
+        </div>
+        <div class="h-1 bg-white absolute bottom-3 left-0 w-full"></div>
+        <div class="h-5 w-1 absolute bottom-1 left-0 bg-white"></div>
+        <div class="h-5 w-1 absolute bottom-1 right-0 bg-white"></div>
+    </div>
+    <div class="swiper swiperHistory max-w-6xl mx-auto px-5 mb-10 md:mb-20">
+        <div class="swiper-wrapper">
+            {{ anos }}
+            <div class="swiper-slide">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center max-w-4xl mx-auto">
+                    <div class="space-y-5">
+                        <div class="text-xl font-bold special-gothic-expanded-one-regular">{{ ano }}</div>
+                       {{ descripcion }} 
+                    </div>
+                    <div class="h-full">
+                        {{ imagen }}
+                        <img class="w-full h-full object-cover" src="{{ url }}" alt="{{ ano }}">
+                        {{ /imagen }}
+                    </div>
+                </div>
+            </div>
+            {{ /anos }}
+        </div>
+    </div>
+</section> 

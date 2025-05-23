@@ -1,0 +1,56 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: logotipo
+            field:
+              container: assets
+              type: assets
+              display: Logotipo
+      -
+        display: 'Pie de página'
+        fields:
+          -
+            handle: pie_de_pagina
+            field:
+              type: markdown
+              display: 'Pie de página'
+      -
+        display: 'Redes sociales'
+        fields:
+          -
+            handle: facebook
+            field:
+              type: link
+              display: Facebook
+          -
+            handle: instagram
+            field:
+              type: link
+              display: Instagram
+          -
+            handle: tiktok
+            field:
+              type: link
+              display: TikTok
+          -
+            handle: linkedin
+            field:
+              type: link
+              display: LinkedIn
+      -
+        display: 'New Section'
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        display: 'New Section'
+        fields:
+          -
+            handle: template
+            field:
+              type: template
+              display: Template

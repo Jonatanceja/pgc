@@ -1,0 +1,19 @@
+{{ imagen_de_portada}}
+<section class="bg-cover bg-center bg-slate-950 min-h-screen flex items-center relative z-0" style="background-image: url('{{ url }}')">
+{{ /imagen_de_portada }}
+    <div class="max-w-6xl mx-auto px-5 relative z-20">
+        <div class="w-full md:w-2/3 space-y-7">
+            {{ partial:partials/cover_headline }}{{ encabezado }}{{ /partial:partials/cover_headline }}
+            <div class="text-xl text-white">{{ texto_de_hero }}</div>
+            <div>
+                {{ boton }}
+                    {{ partial:partials/button_principal }}
+                        {{ slot:link }}{{ enlace_de_boton }}{{ /slot:link }}
+                        {{ texto_de_boton }}
+                    {{ /partial:partials/button_principal }}
+                {{ /boton }}
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-0 right-0 w-full h-full z-10 bg-slate-950/30"></div>
+</section>

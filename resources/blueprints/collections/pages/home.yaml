@@ -1,0 +1,346 @@
+title: Home
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              validate:
+                - required
+      -
+        display: Hero
+        instructions: 'Parte superior del sitio utilizada como portada Introductoria'
+        fields:
+          -
+            handle: imagen_de_portada
+            field:
+              max_files: 1
+              container: assets
+              type: assets
+              display: 'Imagen de portada'
+              mode: grid
+          -
+            handle: encabezado
+            field:
+              type: text
+              display: Encabezado
+          -
+            handle: texto_de_hero
+            field:
+              type: markdown
+              display: 'Texto de hero'
+          -
+            handle: boton
+            field:
+              type: group
+              display: Botón
+              fields:
+                -
+                  handle: texto_de_boton
+                  field:
+                    type: text
+                    display: 'Texto de botón'
+                    width: 50
+                -
+                  handle: enlace_de_boton
+                  field:
+                    type: link
+                    display: 'Enlace de botón'
+                    width: 50
+      -
+        display: Introducción
+        instructions: 'Texto de introducción'
+        fields:
+          -
+            handle: ceja
+            field:
+              type: text
+              display: Ceja
+          -
+            handle: encabezado_de_introduccion
+            field:
+              type: text
+              display: 'Encabezado de introducción'
+          -
+            handle: texto_de_introduccion
+            field:
+              type: markdown
+              display: 'Texto de introducción'
+      -
+        display: 'Sección de servicios'
+        instructions: 'Breve introducción de los servicios.'
+        fields:
+          -
+            handle: servicios
+            field:
+              type: replicator
+              display: Servicios
+              sets:
+                new_set_group:
+                  display: 'New Set Group'
+                  sets:
+                    new_set:
+                      display: 'New Set'
+                      fields:
+                        -
+                          handle: servicio
+                          field:
+                            type: group
+                            display: Servicio
+                            fields:
+                              -
+                                handle: icono
+                                field:
+                                  container: assets
+                                  type: assets
+                                  display: Icono
+                                  mode: grid
+                              -
+                                handle: titulo_de_servicio
+                                field:
+                                  type: text
+                                  display: 'Título de servicio'
+                              -
+                                handle: texto_de_servicio
+                                field:
+                                  type: markdown
+                                  display: 'Texto de servicio'
+                              -
+                                handle: enlace_de_servicio
+                                field:
+                                  type: link
+                                  display: 'Enlace de Servicio'
+                                  collections:
+                                    - servicios
+      -
+        display: Contenido
+        instructions: 'Contenido principal de páginas'
+        fields:
+          -
+            handle: contenido
+            field:
+              type: replicator
+              display: Contenido
+              sets:
+                new_set_group:
+                  display: 'New Set Group'
+                  sets:
+                    new_set:
+                      display: 'New Set'
+                      fields:
+                        -
+                          handle: texto_de_seccion
+                          field:
+                            type: group
+                            display: 'Texto de sección'
+                            width: 50
+                            fields:
+                              -
+                                handle: ceja
+                                field:
+                                  type: text
+                                  display: Ceja
+                              -
+                                handle: encabezado
+                                field:
+                                  type: text
+                                  display: Encabezado
+                              -
+                                handle: texto
+                                field:
+                                  type: markdown
+                                  display: Texto
+                              -
+                                handle: boton
+                                field:
+                                  type: group
+                                  display: Botón
+                                  fields:
+                                    -
+                                      handle: texto_de_boton
+                                      field:
+                                        type: text
+                                        display: 'Texto de botón'
+                                        width: 50
+                                    -
+                                      handle: enlace_de_boton
+                                      field:
+                                        type: link
+                                        display: 'Enlace de botón'
+                                        width: 50
+                        -
+                          handle: imagenes
+                          field:
+                            max_files: 3
+                            mode: grid
+                            container: assets
+                            type: assets
+                            display: Imagenes
+                            width: 50
+                        -
+                          handle: alineacion_de_imagen_y_texto
+                          field:
+                            inline_label: 'Texto a la izquierda'
+                            inline_label_when_true: 'Texto a la derecha'
+                            type: toggle
+                            display: 'Alineación de imagén y texto'
+      -
+        display: Aliados
+        instructions: 'Sección de empresas que trabajan con nosotros.'
+        fields:
+          -
+            handle: encabezado_de_aliados
+            field:
+              type: text
+              display: 'Encabezado de aliados'
+          -
+            handle: logotipos
+            field:
+              container: assets
+              type: assets
+              display: Logotipos
+      -
+        display: Testimoniales
+        fields:
+          -
+            handle: ceja_de_testimoniales
+            field:
+              type: text
+              display: 'Ceja de testimoniales'
+          -
+            handle: encabezado_de_testimoniales
+            field:
+              type: text
+              display: 'Encabezado de testimoniales'
+          -
+            handle: testimoniales
+            field:
+              type: replicator
+              display: Testimoniales
+              sets:
+                new_set_group:
+                  display: 'New Set Group'
+                  sets:
+                    new_set:
+                      display: 'New Set'
+                      fields:
+                        -
+                          handle: testimonial
+                          field:
+                            type: group
+                            display: Testimonial
+                            fields:
+                              -
+                                handle: nombre
+                                field:
+                                  type: text
+                                  display: Nombre
+                              -
+                                handle: texto_de_testimonial
+                                field:
+                                  type: markdown
+                                  display: 'Texto de testimonial'
+                              -
+                                handle: empresa
+                                field:
+                                  type: text
+                                  display: empresa
+      -
+        display: 'Llamado a la acción'
+        fields:
+          -
+            handle: imagen_de_fondo
+            field:
+              max_files: 1
+              mode: grid
+              container: assets
+              type: assets
+              display: 'Imagen de fondo'
+          -
+            handle: encabezado_de_llamado
+            field:
+              type: text
+              display: 'Encabezado de llamado'
+          -
+            handle: texto_de_accion
+            field:
+              type: markdown
+              display: 'Texto de acción'
+          -
+            handle: boton_de_accion
+            field:
+              type: group
+              display: 'Botón de acción'
+              fields:
+                -
+                  handle: texto_de_boton
+                  field:
+                    type: text
+                    display: 'Texto de botón'
+                    width: 50
+                -
+                  handle: enlace_de_boton
+                  field:
+                    type: link
+                    display: 'Enlace de botón'
+                    width: 50
+      -
+        display: 'Optin Mail'
+        instructions: 'Sección de captación de correos'
+        fields:
+          -
+            handle: encabezado_de_optin
+            field:
+              type: text
+              display: 'Encabezado de Optin'
+          -
+            handle: texto_de_optin
+            field:
+              type: markdown
+              display: 'Texto de Optin'
+          -
+            handle: formulario_de_mailchimp
+            field:
+              type: html
+              display: 'Formulario de Mailchimp'
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+          -
+            handle: parent
+            field:
+              type: entries
+              collections:
+                - pages
+              max_items: 1
+              listable: false
+              localizable: true
+          -
+            handle: template
+            field:
+              type: template
+              display: Template
+          -
+            handle: descripcion
+            field:
+              type: textarea
+              display: Descripcion
+          -
+            handle: open_graph
+            field:
+              container: assets
+              type: assets
+              display: 'Open Graph'

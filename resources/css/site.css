@@ -1,4 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Expanded+One&display=swap');
 @import "tailwindcss";
+@theme {
+    --color-pgc: #26D93B;
+}
 @plugin "@tailwindcss/typography";
+@plugin "tailwindcss-motion";
 @source "../views";
 @source "../../content";
+
+
+
+p {
+    font-family: "Roboto", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Special Gothic Expanded One", sans-serif;
+}
+
+a {
+    font-family: "Roboto", sans-serif;
+}
+
+.special-gothic-expanded-one-regular {
+    font-family: "Special Gothic Expanded One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  [x-cloak] {
+    display: none !important;
+  }
+
+.swiper-pagination-bullet {
+  background-color: var(--color-pgc) !important;
+  margin: 0 6px; /* ajusta el valor según lo que necesites */
+}
+
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 10px) !important;
+}

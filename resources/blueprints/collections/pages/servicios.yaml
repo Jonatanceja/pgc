@@ -1,0 +1,70 @@
+title: Servicios
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              validate:
+                - required
+      -
+        display: Portada
+        fields:
+          -
+            handle: imagen_de_portada
+            field:
+              max_files: 1
+              container: assets
+              type: assets
+              display: 'Imagen de Portada'
+      -
+        display: Introducción
+        fields:
+          -
+            import: introduccion
+      -
+        display: Contenido
+        fields:
+          -
+            import: testo_con_imagen
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+          -
+            handle: parent
+            field:
+              type: entries
+              collections:
+                - pages
+              max_items: 1
+              listable: false
+              localizable: true
+          -
+            handle: template
+            field:
+              type: template
+              display: Template
+          -
+            handle: descripcion
+            field:
+              type: textarea
+              display: Descripcion
+          -
+            handle: open_graph
+            field:
+              container: assets
+              type: assets
+              display: 'Open Graph'

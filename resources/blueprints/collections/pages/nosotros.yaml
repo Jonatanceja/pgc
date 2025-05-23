@@ -1,0 +1,231 @@
+title: Nosotros
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              validate:
+                - required
+      -
+        display: Portada
+        instructions: 'Portada de página'
+        fields:
+          -
+            handle: imagen_de_portada
+            field:
+              max_files: 1
+              container: assets
+              type: assets
+              display: 'Imagen de portada'
+      -
+        display: Descripción
+        instructions: 'Descripción de la página del sitio'
+        fields:
+          -
+            import: introduccion
+      -
+        display: 'Misión y visión'
+        fields:
+          -
+            handle: mision
+            field:
+              type: group
+              display: Misión
+              width: 50
+              fields:
+                -
+                  handle: encabezado_de_mision
+                  field:
+                    type: text
+                    display: 'Encabezado de misión'
+                -
+                  handle: mision
+                  field:
+                    type: markdown
+                    display: Misión
+                -
+                  handle: icono_de_mision
+                  field:
+                    container: assets
+                    type: assets
+                    display: 'Icono de misión'
+          -
+            handle: vision
+            field:
+              type: group
+              display: Visión
+              width: 50
+              fields:
+                -
+                  handle: encabezado_de_vision
+                  field:
+                    type: text
+                    display: 'Encabezado de visión'
+                -
+                  handle: vision
+                  field:
+                    type: markdown
+                    display: Visión
+                -
+                  handle: icono_de_vision
+                  field:
+                    container: assets
+                    type: assets
+                    display: 'Icono de visión'
+      -
+        display: Contenido
+        fields:
+          -
+            import: testo_con_imagen
+      -
+        display: Historia
+        instructions: 'Historia de la empresa'
+        fields:
+          -
+            handle: ceja_de_historia
+            field:
+              type: text
+              display: 'Ceja de historia'
+          -
+            handle: encabezado_de_historia
+            field:
+              type: text
+              display: 'Encabezado de historia'
+          -
+            handle: texto_de_historia
+            field:
+              type: markdown
+              display: 'Texto de historia'
+          -
+            handle: anos
+            field:
+              type: replicator
+              display: Años
+              sets:
+                new_set_group:
+                  display: 'New Set Group'
+                  sets:
+                    new_set:
+                      display: 'New Set'
+                      fields:
+                        -
+                          handle: ano
+                          field:
+                            input_type: number
+                            type: text
+                            display: Año
+                        -
+                          handle: descripcion
+                          field:
+                            type: markdown
+                            display: Descripción
+                            width: 50
+                        -
+                          handle: imagen
+                          field:
+                            max_files: 1
+                            container: assets
+                            type: assets
+                            display: Imagen
+                            width: 50
+      -
+        display: 'Llamado a la acción'
+        instructions: 'Sección para agregar llamado a la acción'
+        fields:
+          -
+            handle: imagen_de_fondo
+            field:
+              container: assets
+              type: assets
+              display: 'Imagen de fondo'
+          -
+            handle: encabezado_de_llamado
+            field:
+              type: text
+              display: 'Encabezado de llamado'
+          -
+            handle: texto_de_accion
+            field:
+              type: markdown
+              display: 'Texto de acción'
+          -
+            handle: boton_1
+            field:
+              type: group
+              display: 'Botón 1'
+              width: 50
+              fields:
+                -
+                  handle: texto_de_boton
+                  field:
+                    type: text
+                    display: 'Texto de botón'
+                    width: 50
+                -
+                  handle: enlace_de_boton
+                  field:
+                    type: link
+                    display: 'Enlace de botón'
+                    width: 50
+          -
+            handle: boton_2
+            field:
+              type: group
+              display: 'Botón 2'
+              width: 50
+              fields:
+                -
+                  handle: texto_de_boton
+                  field:
+                    type: text
+                    display: 'Texto de botón'
+                    width: 50
+                -
+                  handle: enlace_de_boton
+                  field:
+                    type: link
+                    display: 'Enlace de boton'
+                    width: 50
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+          -
+            handle: parent
+            field:
+              type: entries
+              collections:
+                - pages
+              max_items: 1
+              listable: false
+              localizable: true
+          -
+            handle: template
+            field:
+              type: template
+              display: Template
+          -
+            handle: descripcion
+            field:
+              type: textarea
+              display: Descripcion
+          -
+            handle: open_graph
+            field:
+              max_files: 1
+              container: assets
+              type: assets
+              display: 'Open Graph'

@@ -1,0 +1,17 @@
+title: Introducción
+fields:
+  -
+    handle: ceja
+    field:
+      type: text
+      display: Ceja
+  -
+    handle: encabezado_de_introduccion
+    field:
+      type: text
+      display: 'Encabezado de introducción'
+  -
+    handle: texto_de_introduccion
+    field:
+      type: markdown
+      display: 'Texto de introducción'

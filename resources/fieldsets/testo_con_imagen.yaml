@@ -1,0 +1,69 @@
+title: Contenido
+fields:
+  -
+    handle: contenido
+    field:
+      type: replicator
+      display: Contenido
+      sets:
+        new_set_group:
+          display: 'New Set Group'
+          sets:
+            new_set:
+              display: 'New Set'
+              fields:
+                -
+                  handle: texto_de_seccion
+                  field:
+                    type: group
+                    display: 'Texto de sección'
+                    width: 50
+                    fields:
+                      -
+                        handle: ceja
+                        field:
+                          type: text
+                          display: Ceja
+                      -
+                        handle: encabezado
+                        field:
+                          type: text
+                          display: Encabezado
+                      -
+                        handle: texto
+                        field:
+                          type: markdown
+                          display: Texto
+                      -
+                        handle: boton
+                        field:
+                          type: group
+                          display: Botón
+                          fields:
+                            -
+                              handle: texto_de_boton
+                              field:
+                                type: text
+                                display: 'Texto de botón'
+                                width: 50
+                            -
+                              handle: enlace_de_boton
+                              field:
+                                type: link
+                                display: 'Enlace de botón'
+                                width: 50
+                -
+                  handle: imagenes
+                  field:
+                    max_files: 3
+                    container: assets
+                    type: assets
+                    display: Imagenes
+                    width: 50
+                -
+                  handle: alineacion_de_imagen_y_texto
+                  field:
+                    inline_label: 'Texto a la izquierda'
+                    inline_label_when_true: 'Texto a la derecha'
+                    type: toggle
+                    display: 'Alineación de imagén y texto'

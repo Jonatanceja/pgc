@@ -1,0 +1,21 @@
+<section class="py-10 md:py-20 px-5">
+    {{ imagen_de_fondo }}
+        <div class="bg-cover bg-center bg-slate-950 max-w-6xl mx-auto px-5 text-center rounded-xl py-10 md:py-20 relative overflow-hidden" style="background-image: url('{{ url }}');">
+            <div class="space-y-7 md:w-2/3 mx-auto relative z-20">
+                {{ partial:partials/cover_headline }}{{ encabezado_de_llamado }}{{ /partial:partials/cover_headline }}
+                <div class="text-xl text-white">{{ texto_de_accion }}</div>
+                <div>
+                        {{ boton_de_accion }}
+                            {{ partial:partials/button_principal }}
+                                {{ slot:link }}{{ enlace_de_boton }}{{ /slot:link }}
+                                {{ texto_de_boton }}
+                            {{ /partial:partials/button_principal }}
+                        {{ /boton_de_accion }}
+                </div>
+            </div>
+            <div>
+                <div class="absolute bottom-0 right-0 w-full h-full z-10 bg-slate-950/30"></div>
+            </div>
+        </div>
+    {{ /imagen_de_fondo }}
+</section>

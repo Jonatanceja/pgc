@@ -1,0 +1,98 @@
+title: Contacto
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              validate:
+                - required
+      -
+        display: Portada
+        fields:
+          -
+            handle: imagen_de_portada
+            field:
+              container: assets
+              type: assets
+              display: 'Imagen de portada'
+      -
+        display: 'Información de contacto'
+        instructions: 'Teléfono, Correo, Whatsapp'
+        fields:
+          -
+            handle: items
+            field:
+              type: replicator
+              display: Items
+              sets:
+                new_set_group:
+                  display: 'New Set Group'
+                  sets:
+                    new_set:
+                      display: 'New Set'
+                      fields:
+                        -
+                          handle: item
+                          field:
+                            type: group
+                            display: Item
+                            fields:
+                              -
+                                handle: icono_de_item
+                                field:
+                                  container: assets
+                                  type: assets
+                                  display: 'Icono de item'
+                              -
+                                handle: texto_de_item
+                                field:
+                                  type: text
+                                  display: 'Texto de item'
+                              -
+                                handle: enlace_de_item
+                                field:
+                                  type: link
+                                  display: 'Enlace de item'
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+          -
+            handle: parent
+            field:
+              type: entries
+              collections:
+                - pages
+              max_items: 1
+              listable: false
+              localizable: true
+          -
+            handle: template
+            field:
+              type: template
+              display: Template
+          -
+            handle: descripcion
+            field:
+              type: textarea
+              display: Descripcion
+          -
+            handle: open_graph
+            field:
+              max_files: 1
+              container: assets
+              type: assets
+              display: 'Open Graph'

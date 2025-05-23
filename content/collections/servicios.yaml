@@ -1,0 +1,18 @@
+title: Servicios
+template: servicio
+layout: layout
+mount: 1ada5945-fc83-4b2d-af85-e022ce093b89
+revisions: false
+route: '/servicios/{{ slug }}'
+sort_dir: asc
+date_behavior:
+  past: public
+  future: private
+preview_targets:
+  -
+    label: Entry
+    url: '{permalink}'
+    refresh: true
+structure:
+  root: false
+  slugs: true

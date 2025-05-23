@@ -1,0 +1,10 @@
+title: Footer
+data:
+  logotipo:
+    - pgc.svg
+  pie_de_pagina: 'Todos los derechos reservados PGC - 2025 | **[Aviso de privacidad](/aviso-de-privacidad)**'
+  facebook: 'https://www.facebook.com/'
+  instagram: 'https://www.instagram.com/'
+  tiktok: 'https://www.tiktok.com/'
+  linkedin: 'https://www.linkedin.com/'
+  template: blocks/globals/footer

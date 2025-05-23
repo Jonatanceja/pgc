@@ -1,0 +1,158 @@
+title: Servicio
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              validate:
+                - required
+      -
+        display: Portada
+        fields:
+          -
+            handle: imagen_de_portada
+            field:
+              max_files: 1
+              container: assets
+              type: assets
+              display: 'Imagen de Portada'
+      -
+        display: Introducción
+        fields:
+          -
+            import: introduccion
+      -
+        display: Servicios
+        fields:
+          -
+            handle: servicios
+            field:
+              type: replicator
+              display: Servicios
+              sets:
+                new_set_group:
+                  display: 'New Set Group'
+                  sets:
+                    servicio:
+                      display: Servicio
+                      fields:
+                        -
+                          handle: servicio
+                          field:
+                            type: group
+                            display: Servicio
+                            fields:
+                              -
+                                handle: icono
+                                field:
+                                  max_files: 1
+                                  container: assets
+                                  type: assets
+                                  display: Icono
+                              -
+                                handle: titulo_de_servicio
+                                field:
+                                  type: text
+                                  display: 'Titulo de Servicio'
+                              -
+                                handle: texto_de_servicio
+                                field:
+                                  type: markdown
+                                  display: 'Texto de Servicio'
+      -
+        display: Contenido
+        fields:
+          -
+            import: testo_con_imagen
+      -
+        display: Contacto
+        fields:
+          -
+            handle: agente
+            field:
+              type: text
+              display: Agente
+              width: 50
+          -
+            handle: imagen_de_agente
+            field:
+              container: assets
+              type: assets
+              display: 'Imagen de Agente'
+              width: 50
+          -
+            handle: imagen_de_fondo_de_contacto
+            field:
+              container: assets
+              type: assets
+              display: 'Imagen de fondo de contacto'
+          -
+            handle: encabezado_de_contacto
+            field:
+              type: text
+              display: 'Encabezado de contacto'
+          -
+            handle: texto_de_contacto
+            field:
+              type: markdown
+              display: 'Texto de contacto'
+          -
+            handle: boton_de_contacto
+            field:
+              type: group
+              display: 'Botón de contacto'
+              fields:
+                -
+                  handle: texto_de_boton
+                  field:
+                    type: text
+                    display: 'Texto de botón'
+                    width: 50
+                -
+                  handle: link_de_boton
+                  field:
+                    type: link
+                    display: 'Link de botón'
+                    width: 50
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+          -
+            handle: parent
+            field:
+              type: entries
+              collections:
+                - servicios
+              max_items: 1
+              listable: false
+              localizable: true
+          -
+            handle: template
+            field:
+              type: template
+              display: Template
+          -
+            handle: descripcion
+            field:
+              type: textarea
+              display: Descripción
+          -
+            handle: open_graph
+            field:
+              container: assets
+              type: assets
+              display: 'Open Graph'
