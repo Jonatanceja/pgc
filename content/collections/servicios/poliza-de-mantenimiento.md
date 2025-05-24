@@ -56,8 +56,9 @@ boton_de_contacto:
   texto_de_boton: 'Contacta a'
   link_de_boton: null
 updated_by: 0d157ba3-cc43-4f94-9a8e-b6366c672ccb
-updated_at: 1747449229
+updated_at: 1748051787
 descripcion: 'Ofrecemos acompañamiento constante, revisiones periódicas y atención inmediata cuando lo necesitas'
 open_graph:
   - polizas.jpg
+agente: Geovanni
 ---

@@ -23,7 +23,7 @@ contenido:
     alineacion_de_imagen_y_texto: false
     type: new_set
     enabled: true
-agente: 'Geovanni Mendoza'
+agente: Geovanni
 imagen_de_agente:
   - avatar-portrait-svgrepo-com.svg
 imagen_de_fondo_de_contacto:
@@ -34,7 +34,7 @@ boton_de_contacto:
   texto_de_boton: 'Contacta a'
   link_de_boton: null
 updated_by: 0d157ba3-cc43-4f94-9a8e-b6366c672ccb
-updated_at: 1747449320
+updated_at: 1748051810
 descripcion: 'Diseñamos e implementamos proyectos digitales que se adaptan a las necesidades específicas de tu empresa'
 open_graph:
   - proyectos.jpg

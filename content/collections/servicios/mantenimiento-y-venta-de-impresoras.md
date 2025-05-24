@@ -52,8 +52,8 @@ boton_de_contacto:
   texto_de_boton: 'Contacta a'
   link_de_boton: 'https://api.whatsapp.com/send?phone=523317698384&text=Hola!%20Estoy%20interesado%20en%20sus%20servicios'
 updated_by: 0d157ba3-cc43-4f94-9a8e-b6366c672ccb
-updated_at: 1747449192
-agente: 'Geovanni Mendoza'
+updated_at: 1748051762
+agente: Geovanni
 imagen_de_fondo_de_contacto:
   - cover.webp
   - avatar-svgrepo-com.svg

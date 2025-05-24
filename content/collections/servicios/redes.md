@@ -47,7 +47,7 @@ contenido:
     alineacion_de_imagen_y_texto: false
     type: new_set
     enabled: true
-agente: 'Geovanni Mendoza'
+agente: Geovanni
 imagen_de_agente:
   - avatar-svgrepo-com-(1).svg
 imagen_de_fondo_de_contacto:
@@ -58,7 +58,7 @@ boton_de_contacto:
   texto_de_boton: 'Contacta a'
   link_de_boton: null
 updated_by: 0d157ba3-cc43-4f94-9a8e-b6366c672ccb
-updated_at: 1747449286
+updated_at: 1748051799
 descripcion: 'Creamos redes cableadas e inalámbricas desde cero, adaptadas a tu espacio y necesidades. Todo listo para que comiences a trabajar sin interrupciones.'
 open_graph:
   - redes.jpg

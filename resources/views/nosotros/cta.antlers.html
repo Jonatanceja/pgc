@@ -1,10 +1,10 @@
 <section class="py-10 md:py-20 px-5">
     {{ imagen_de_fondo }}
         <div class="bg-cover bg-center bg-slate-950 max-w-6xl mx-auto px-5 text-left rounded-xl py-10 md:py-20 relative overflow-hidden" style="background-image: url('{{ url }}');">
-            <div class="space-y-7 mx-auto relative z-20 p-10">
+            <div class="space-y-7 mx-auto relative z-20 p-0 md:p-10">
                 {{ partial:partials/cover_headline }}{{ encabezado_de_llamado }}{{ /partial:partials/cover_headline }}
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-end">
-                    <div class="text-xl text-white md:col-span-2">{{ texto_de_accion }}</div>
+                    <div class="text-xl text-white col-span-1 md:col-span-2">{{ texto_de_accion }}</div>
                     <div class="md:col-span-1 flex gap-5">
                             {{ boton_1 }}
                                 {{ partial:partials/button_principal }}
