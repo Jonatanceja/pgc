@@ -1,7 +1,7 @@
 <section>
     {{ partial:partials/centered_text }}
         {{ slot:ceja }}{{ ceja }}{{ /slot:ceja }}
-        {{ slot:encabezado }}{{ encabezado_de_introduccion }}{{ /slot:encabezado }}
+        <h2 class="text-3xl md:text-5xl font-bold text-white">{{ encabezado_de_introduccion }}</h2>
         {{ texto_de_introduccion }}
     {{ /partial:partials/centered_text }}
 </section>
