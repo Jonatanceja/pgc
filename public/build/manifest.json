@@ -1,16 +1,26 @@
 {
+  "node_modules/swiper/swiper-bundle.css": {
+    "file": "assets/swiper-bundle-BUrcyj0q.css",
+    "src": "node_modules/swiper/swiper-bundle.css"
+  },
+  "node_modules/swiper/swiper-bundle.mjs": {
+    "file": "assets/swiper-bundle-DAEdKFqL.js",
+    "name": "swiper-bundle",
+    "src": "node_modules/swiper/swiper-bundle.mjs",
+    "isDynamicEntry": true
+  },
   "resources/css/site.css": {
-    "file": "assets/site-D4ZtfXB1.css",
+    "file": "assets/site-CsV2Vj2P.css",
     "src": "resources/css/site.css",
     "isEntry": true
   },
   "resources/js/site.js": {
-    "file": "assets/site-ooqPKVyF.js",
+    "file": "assets/site-BQrvtD1q.js",
     "name": "site",
     "src": "resources/js/site.js",
     "isEntry": true,
-    "css": [
-      "assets/site-BUrcyj0q.css"
+    "dynamicImports": [
+      "node_modules/swiper/swiper-bundle.mjs"
     ]
   }
 }

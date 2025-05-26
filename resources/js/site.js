@@ -1,48 +1,53 @@
-// Alpine.
-import Alpine from 'alpinejs'
- 
-window.Alpine = Alpine
- 
-Alpine.start()
+// Alpine (always loaded)
+import Alpine from 'alpinejs';
 
-// Swiper
-// import Swiper bundle with all modules installed
-import Swiper from 'swiper/bundle';
+window.Alpine = Alpine;
+Alpine.start();
 
-// import styles bundle
-import 'swiper/css/bundle';
+// Lazy-load Swiper only if swiper elements are present
+if (
+  document.querySelector('.mySwiper') ||
+  document.querySelector('.swiperThumbs') ||
+  document.querySelector('.swiperHistory')
+) {
+  (async () => {
+    // Dynamically import Swiper JS bundle and CSS
+    const SwiperModule = await import('swiper/bundle');
+    await import('swiper/css/bundle');
 
-// init Swiper:
-var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 1, // valor base (móvil)
-    spaceBetween: 30,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    breakpoints: {
-      // A partir de 768px (escritorio)
-      768: {
-        slidesPerView: 3
-      }
-    }
-  });
+    const Swiper = SwiperModule.default;
 
-var swiper2 = new Swiper(".swiperThumbs", {
+    // Initialize main swiper
+    const swiper = new Swiper('.mySwiper', {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        768: { slidesPerView: 3 },
+      },
+    });
+
+    // Initialize thumbs swiper
+    const swiper2 = new Swiper('.swiperThumbs', {
       spaceBetween: 10,
       slidesPerView: 4,
       freeMode: true,
       watchSlidesProgress: true,
     });
 
-var swiper3 = new Swiper(".swiperHistory", {
+    // Initialize history swiper with thumbs
+    const swiper3 = new Swiper('.swiperHistory', {
       spaceBetween: 10,
       navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
       thumbs: {
         swiper: swiper2,
       },
     });
-
+  })();
+}
