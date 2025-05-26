@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6cb3ac24a89a69761e7f3e708109ec97",
+    "content-hash": "4e78c37312101617be2e6bf96617e293",
     "packages": [
         {
             "name": "ajthinking/archetype",
@@ -1197,50 +1197,6 @@
                 }
             ],
             "time": "2025-02-03T10:55:03+00:00"
-        },
-        {
-            "name": "iagofelicio/geo-maps",
-            "version": "1.0.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Iagofelicio/geo-maps.git",
-                "reference": "53e09dd555cefc44d3126572480c3e4dc11b1a76"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Iagofelicio/geo-maps/zipball/53e09dd555cefc44d3126572480c3e4dc11b1a76",
-                "reference": "53e09dd555cefc44d3126572480c3e4dc11b1a76",
-                "shasum": ""
-            },
-            "require": {
-                "statamic/cms": "^3.0 || ^4.0 || ^5.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^6.0 || ^7.0 || ^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Iagofelicio\\GeoMaps\\ServiceProvider"
-                    ]
-                },
-                "statamic": {
-                    "name": "Geo Maps",
-                    "description": "Geo Maps addon"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Iagofelicio\\GeoMaps\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "support": {
-                "issues": "https://github.com/Iagofelicio/geo-maps/issues",
-                "source": "https://github.com/Iagofelicio/geo-maps/tree/1.0.10"
-            },
-            "time": "2025-03-25T17:33:08+00:00"
         },
         {
             "name": "intervention/image",

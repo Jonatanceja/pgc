@@ -45,3 +45,18 @@ var swiper3 = new Swiper(".swiperHistory", {
         swiper: swiper2,
       },
     });
+
+// site.js o donde quieras iniciar el mapa
+document.addEventListener('DOMContentLoaded', () => {
+    const mapContainer = document.getElementById('map');
+
+    if (mapContainer) {
+        import('./map.js')
+            .then((module) => {
+                module.initMap();
+            })
+            .catch((err) => {
+                console.error('Error al cargar el mapa:', err);
+            });
+    }
+});
