@@ -2,3 +2,6 @@ name: 'Jonatan Ceja'
 super: true
 id: 0d157ba3-cc43-4f94-9a8e-b6366c672ccb
 password_hash: $2y$12$XYzJWiYBWob84zUMwq3sy.AaGktN4BtmzrFuwgDj7A2VllwvqOjv2
+preferences:
+  locale: es
+  favorites: {  }

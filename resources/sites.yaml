@@ -2,3 +2,4 @@ default:
   name: '{{ config:app:name }}'
   url: /
   locale: es_MX
+  lang: ES
