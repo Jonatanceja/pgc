@@ -1,5 +1,25 @@
 deployment:
   tasks:
-    - /usr/local/bin/composer install --no-dev
-    - npm install
+    # 1. Moverse al directorio del proyecto
+    - cd $DEPLOYMENT_WORKING_DIR
+
+    # 2. Instalar dependencias PHP sin las de desarrollo
+    - /usr/local/bin/composer install --no-dev --optimize-autoloader
+
+    # 3. Instalar dependencias de Node (si usas Vite o Tailwind)
+    - npm ci
+
+    # 4. Compilar los assets
     - npm run build
+
+    # 5. Establecer permisos de directorios (ajusta a tu entorno)
+    - chmod -R 775 storage
+    - chmod -R 775 bootstrap/cache
+
+    # 6. Cache (opcional)
+    - php artisan config:cache
+    - php artisan route:cache
+    - php artisan view:cache
+
+    # 7. Limpiar cachés antiguos si es necesario
+    - php artisan cache:clear
