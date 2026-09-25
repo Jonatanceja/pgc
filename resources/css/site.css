@@ -78,3 +78,47 @@ a {
   box-shadow: 0 0 0 4px rgb(38 217 59 / 0.25);
   transform: scale(1.25);
 }
+
+/* Animaciones de entrada */
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nav-enter {
+  animation: nav-down 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes nav-down {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .nav-enter {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
