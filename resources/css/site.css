@@ -2,6 +2,7 @@
 @theme {
     --color-pgc: #26D93B;
 }
+@custom-variant dark (&:where(.dark, .dark *));
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-motion";
 @source "../views";
@@ -38,4 +39,42 @@ a {
 
 .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
     margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 10px) !important;
+}
+
+.site-bg {
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(60rem 40rem at 10% -10%, rgb(38 217 59 / 0.10), transparent 60%),
+    radial-gradient(50rem 40rem at 100% 40%, rgb(38 217 59 / 0.07), transparent 60%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+  background-attachment: fixed;
+}
+
+.dark .site-bg {
+  background-color: #020617;
+  background-image:
+    radial-gradient(60rem 40rem at 10% -10%, rgb(38 217 59 / 0.14), transparent 60%),
+    radial-gradient(50rem 40rem at 100% 40%, rgb(38 217 59 / 0.08), transparent 60%),
+    linear-gradient(180deg, #020617 0%, #0b1220 100%);
+}
+.swiper-pagination-bullet {
+  opacity: 0.35;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  width: 24px !important;
+  border-radius: 9999px !important;
+  opacity: 1;
+}
+
+.swiperThumbs .swiper-slide-thumb-active {
+  color: var(--color-pgc);
+}
+
+.swiperThumbs .swiper-slide-thumb-active .timeline-dot,
+.swiperThumbs .timeline-item:hover .timeline-dot {
+  background-color: var(--color-pgc);
+  box-shadow: 0 0 0 4px rgb(38 217 59 / 0.25);
+  transform: scale(1.25);
 }

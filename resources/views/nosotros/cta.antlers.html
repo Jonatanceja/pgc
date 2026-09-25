@@ -1,6 +1,6 @@
 <section class="py-10 md:py-20 px-5">
     {{ imagen_de_fondo }}
-        <div class="bg-cover bg-center bg-slate-950 max-w-6xl mx-auto px-5 text-left rounded-xl py-10 md:py-20 relative overflow-hidden" style="background-image: url('{{ url }}');">
+        <div class="bg-cover bg-center bg-slate-950 max-w-6xl mx-auto px-5 text-left rounded-2xl border border-white/15 shadow-lg py-10 md:py-20 relative overflow-hidden" style="background-image: url('{{ url }}');">
             <div class="space-y-7 mx-auto relative z-20 p-0 md:p-10">
                 {{ partial:partials/cover_headline }}{{ encabezado_de_llamado }}{{ /partial:partials/cover_headline }}
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-end">
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div>
-                <div class="absolute bottom-0 right-0 w-full h-full z-10 bg-slate-950/30"></div>
+                <div class="absolute bottom-0 right-0 w-full h-full z-10 bg-linear-to-r from-slate-950/85 via-slate-950/50 to-slate-950/10"></div>
             </div>
         </div>
     {{ /imagen_de_fondo }}

@@ -44,11 +44,21 @@
         </noscript>
 
         
+        <script>
+            (function () {
+                try {
+                    var t = localStorage.getItem('theme') || 'system';
+                    var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    document.documentElement.classList.toggle('dark', dark);
+                } catch (e) {}
+            })();
+        </script>
+
         {{ vite src="resources/js/site.js|resources/css/site.css" }}
 
         {{ map:requirements }}
     </head>
-    <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200">
+    <body class="site-bg min-h-screen text-slate-800 dark:text-slate-200">
         {{ partial:if_exists src="navigation/nav" }}
         {{ template_content }}
         {{ partial:if_exists src="globals/footer" }}

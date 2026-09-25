@@ -9,8 +9,32 @@
     <div class="max-w-4xl mx-auto px-5 text-center space-y-7">
         <h2 class="text-2xl md:text-3xl font-bold dark:text-white text-slate-950">{{ encabezado_de_optin }}</h2>
         <div>{{ texto_de_optin }}</div>
-        <div>
-            {{ formulario_de_mailchimp }}
+        <div class="mx-auto max-w-xl rounded-2xl border border-slate-300/50 bg-white/50 p-6 text-left shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/5 md:p-8">
+            {{ form:diagnostico }}
+                {{ if success }}
+                    <div class="text-center font-bold text-pgc special-gothic-expanded-one-regular" role="status">¡Gracias! Recibimos tus datos y te contactaremos pronto.</div>
+                {{ else }}
+                    <div class="space-y-4">
+                        <div>
+                            <label for="empresa" class="sr-only">Nombre de la empresa</label>
+                            <input id="empresa" type="text" name="empresa" value="{{ old:empresa }}" placeholder="Nombre de la empresa" required class="w-full rounded-full border border-slate-300/60 bg-white/60 px-5 py-3 text-slate-950 placeholder:text-slate-500 backdrop-blur-md focus:border-pgc focus:outline-none focus:ring-2 focus:ring-pgc/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-400">
+                            {{ if error:empresa }}<p class="mt-1 px-2 text-sm text-red-500">{{ error:empresa }}</p>{{ /if }}
+                        </div>
+                        <div>
+                            <label for="email" class="sr-only">Correo electrónico</label>
+                            <input id="email" type="email" name="email" value="{{ old:email }}" placeholder="Correo electrónico" required class="w-full rounded-full border border-slate-300/60 bg-white/60 px-5 py-3 text-slate-950 placeholder:text-slate-500 backdrop-blur-md focus:border-pgc focus:outline-none focus:ring-2 focus:ring-pgc/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-400">
+                            {{ if error:email }}<p class="mt-1 px-2 text-sm text-red-500">{{ error:email }}</p>{{ /if }}
+                        </div>
+                        <div>
+                            <label for="telefono" class="sr-only">Teléfono</label>
+                            <input id="telefono" type="tel" name="telefono" value="{{ old:telefono }}" placeholder="Teléfono" required class="w-full rounded-full border border-slate-300/60 bg-white/60 px-5 py-3 text-slate-950 placeholder:text-slate-500 backdrop-blur-md focus:border-pgc focus:outline-none focus:ring-2 focus:ring-pgc/40 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-slate-400">
+                            {{ if error:telefono }}<p class="mt-1 px-2 text-sm text-red-500">{{ error:telefono }}</p>{{ /if }}
+                        </div>
+                        <input type="text" name="honeypot" value="" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <button type="submit" class="w-full rounded-full bg-pgc px-8 py-4 font-bold text-slate-950 shadow-md transition-all duration-150 ease-in-out hover:scale-[1.02] hover:bg-lime-400 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-lime-300 active:scale-95 special-gothic-expanded-one-regular">Quiero mi diagnóstico</button>
+                    </div>
+                {{ /if }}
+            {{ /form:diagnostico }}
         </div>
     </div>
 </section>

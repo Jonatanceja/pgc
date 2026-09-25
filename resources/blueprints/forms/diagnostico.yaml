@@ -1,0 +1,30 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: empresa
+            field:
+              type: text
+              display: 'Nombre de la empresa'
+              validate:
+                - required
+          -
+            handle: email
+            field:
+              type: text
+              input_type: email
+              display: 'Correo electrónico'
+              validate:
+                - required
+                - email
+          -
+            handle: telefono
+            field:
+              type: text
+              input_type: tel
+              display: Teléfono
+              validate:
+                - required

@@ -20,13 +20,17 @@ if (
     // Initialize main swiper
     const swiper = new Swiper('.mySwiper', {
       slidesPerView: 1,
-      spaceBetween: 30,
+      spaceBetween: 24,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
       },
+      navigation: {
+        nextEl: '.testimonios-next',
+        prevEl: '.testimonios-prev',
+      },
       breakpoints: {
-        768: { slidesPerView: 3 },
+        768: { slidesPerView: 2 },
       },
     });
 
