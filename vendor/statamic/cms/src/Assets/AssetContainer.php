@@ -7,6 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Statamic\Contracts\Assets\AssetContainer as AssetContainerContract;
 use Statamic\Contracts\Data\Augmentable;
 use Statamic\Contracts\Data\Augmented;
+use Statamic\Contracts\Query\ContainsQueryableValues;
 use Statamic\Data\ExistsAsFile;
 use Statamic\Data\HasAugmentedInstance;
 use Statamic\Events\AssetContainerBlueprintFound;
@@ -30,7 +31,7 @@ use Statamic\Support\Arr;
 use Statamic\Support\Str;
 use Statamic\Support\Traits\FluentlyGetsAndSets;
 
-class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, Augmentable
+class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, Augmentable, ContainsQueryableValues
 {
     use ExistsAsFile, FluentlyGetsAndSets, HasAugmentedInstance;
 
@@ -139,9 +140,7 @@ class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, 
             return null;
         }
 
-        $url = (string) Str::of($this->disk()->url('/'))
-            ->rtrim('/')
-            ->after(config('app.url'));
+        $url = rtrim($this->disk()->url('/'), '/');
 
         return ($url === '') ? '/' : $url;
     }
@@ -510,6 +509,8 @@ class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, 
      *
      * @param  bool|null  $allowDownloading
      * @return bool|$this
+     *
+     * @deprecated
      */
     public function allowDownloading($allowDownloading = null)
     {
@@ -526,6 +527,8 @@ class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, 
      *
      * @param  bool|null  $allowMoving
      * @return bool|$this
+     *
+     * @deprecated
      */
     public function allowMoving($allowMoving = null)
     {
@@ -542,6 +545,8 @@ class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, 
      *
      * @param  bool|null  $allowRenaming
      * @return bool|$this
+     *
+     * @deprecated
      */
     public function allowRenaming($allowRenaming = null)
     {
@@ -558,6 +563,8 @@ class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, 
      *
      * @param  bool|null  $allowUploads
      * @return bool|$this
+     *
+     * @deprecated
      */
     public function allowUploads($allowUploads = null)
     {
@@ -574,6 +581,8 @@ class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, 
      *
      * @param  bool|null  $createFolders
      * @return bool|$this
+     *
+     * @deprecated
      */
     public function createFolders($createFolders = null)
     {
@@ -617,7 +626,10 @@ class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, 
                     return $presets;
                 }
 
-                $presets = Image::userManipulationPresets();
+                $presets = [
+                    ...Image::userManipulationPresets(),
+                    ...Image::customManipulationPresets(),
+                ];
 
                 $presets = Arr::except($presets, $this->sourcePreset);
 
@@ -681,6 +693,24 @@ class AssetContainer implements Arrayable, ArrayAccess, AssetContainerContract, 
     public static function __callStatic($method, $parameters)
     {
         return Facades\AssetContainer::{$method}(...$parameters);
+    }
+
+    public function getQueryableValue(string $field)
+    {
+        if (in_array($method = Str::camel($field), $this->queryableMethods())) {
+            return $this->{$method}();
+        }
+
+        return null;
+    }
+
+    private function queryableMethods(): array
+    {
+        return [
+            'absoluteUrl', 'accessible', 'allowDownloading', 'allowMoving', 'allowRenaming', 'allowUploads',
+            'blueprint', 'createFolders', 'diskHandle', 'diskPath', 'editUrl', 'handle', 'hasSearchIndex',
+            'id', 'path', 'private', 'searchIndex', 'showUrl', 'sortDirection', 'sortField', 'title', 'url',
+        ];
     }
 
     public function __toString()

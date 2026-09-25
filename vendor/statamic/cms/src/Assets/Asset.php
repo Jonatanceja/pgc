@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use League\Flysystem\PathTraversalDetected;
+use Rhukster\DomSanitizer\DOMSanitizer;
 use Statamic\Assets\AssetUploader as Uploader;
 use Statamic\Contracts\Assets\Asset as AssetContract;
 use Statamic\Contracts\Assets\AssetContainer as AssetContainerContract;
@@ -114,6 +115,12 @@ class Asset implements Arrayable, ArrayAccess, AssetContract, Augmentable, Conta
     {
         $this->data = collect();
         $this->supplements = collect();
+    }
+
+    public function __clone()
+    {
+        $this->data = clone $this->data;
+        $this->supplements = clone $this->supplements;
     }
 
     public function id($id = null)
@@ -769,6 +776,13 @@ class Asset implements Arrayable, ArrayAccess, AssetContract, Augmentable, Conta
         return $this;
     }
 
+    public function moveQuietly($folder, $filename = null)
+    {
+        $this->withEvents = false;
+
+        return $this->move(...func_get_args());
+    }
+
     /**
      * Replace an asset and/or its references where necessary.
      *
@@ -781,13 +795,13 @@ class Asset implements Arrayable, ArrayAccess, AssetContract, Augmentable, Conta
         // until after the `AssetReplaced` event is fired. We still want to fire events
         // like `AssetDeleted` and `AssetSaved` though, so that other listeners will
         // get triggered (for cache invalidation, clearing of glide cache, etc.)
-        UpdateAssetReferencesSubscriber::disable();
+        app(UpdateAssetReferencesSubscriber::class)::disable();
 
         if ($deleteOriginal) {
             $originalAsset->delete();
         }
 
-        UpdateAssetReferencesSubscriber::enable();
+        app(UpdateAssetReferencesSubscriber::class)::enable();
 
         AssetReplaced::dispatch($originalAsset, $this);
 
@@ -917,7 +931,7 @@ class Asset implements Arrayable, ArrayAccess, AssetContract, Augmentable, Conta
             ->syncOriginal()
             ->save();
 
-        AssetUploaded::dispatch($this);
+        AssetUploaded::dispatch($this, $file->getClientOriginalName());
 
         AssetCreated::dispatch($this);
 
@@ -932,10 +946,21 @@ class Asset implements Arrayable, ArrayAccess, AssetContract, Augmentable, Conta
 
         $file->writeTo($this->disk()->filesystem(), $this->path());
 
+        if ($this->isSvg() && config('statamic.assets.svg_sanitization_on_upload', true)) {
+            $contents = $this->disk()->get($this->path());
+
+            $this->disk()->put(
+                $this->path(),
+                (new DOMSanitizer(DOMSanitizer::SVG))->sanitize($contents, [
+                    'remove-xml-tags' => ! Str::startsWith($contents, '<?xml'),
+                ])
+            );
+        }
+
         $this->clearCaches();
         $this->writeMeta($this->generateMeta());
 
-        AssetReuploaded::dispatch($this);
+        AssetReuploaded::dispatch($this, $file->basename());
 
         return $this;
     }
@@ -1091,7 +1116,7 @@ class Asset implements Arrayable, ArrayAccess, AssetContract, Augmentable, Conta
 
     public function getQueryableValue(string $field)
     {
-        if (method_exists($this, $method = Str::camel($field))) {
+        if (in_array($method = Str::camel($field), $this->queryableMethods())) {
             return $this->{$method}();
         }
 
@@ -1102,6 +1127,17 @@ class Asset implements Arrayable, ArrayAccess, AssetContract, Augmentable, Conta
         }
 
         return $field->fieldtype()->toQueryableValue($value);
+    }
+
+    private function queryableMethods(): array
+    {
+        return [
+            'absoluteUrl', 'apiUrl', 'basename', 'blueprint', 'containerId', 'containerHandle', 'dimensions',
+            'duration', 'editUrl', 'exists', 'extension', 'filename', 'folder', 'guessedExtension',
+            'hasDimensions', 'hasDuration', 'height', 'id', 'isAudio', 'isImage', 'isMedia', 'isPdf',
+            'isPreviewable', 'isSvg', 'isVideo', 'lastModified', 'mimeType', 'orientation', 'path', 'pdfUrl',
+            'ratio', 'reference', 'size', 'thumbnailUrl', 'title', 'url', 'width',
+        ];
     }
 
     public function getCurrentDirtyStateAttributes(): array

@@ -20,10 +20,12 @@ class Terms extends FieldtypeFilter
                 'default' => 'like',
             ],
             'term' => [
-                'type' => 'select',
-                'options' => $this->options()->all(),
+                'type' => 'terms',
                 'placeholder' => __('Term'),
                 'clearable' => true,
+                'mode' => 'select',
+                'max_items' => 1,
+                'taxonomies' => $this->fieldtype->taxonomies(),
                 'if' => [
                     'operator' => 'contains_any like',
                 ],
@@ -36,7 +38,9 @@ class Terms extends FieldtypeFilter
         $operator = $values['operator'];
 
         match ($operator) {
-            'like' => $query->whereJsonContains($handle, $values['term']),
+            'like' => $this->fieldtype->config('max_items') === 1
+                ? $query->where($handle, 'like', "%{$values['term']}%")
+                : $query->whereJsonContains($handle, $values['term']),
             'null' => $query->whereNull($handle),
             'not-null' => $query->whereNotNull($handle),
         };
@@ -60,22 +64,5 @@ class Terms extends FieldtypeFilter
         $term = Facades\Term::find($id)->title();
 
         return $field.': '.$term;
-    }
-
-    protected function options()
-    {
-        return collect($this->fieldtype->taxonomies())
-            ->map(function ($handle) {
-                return Facades\Taxonomy::find($handle);
-            })
-            ->filter()
-            ->flatMap(function ($taxonomy) {
-                return $taxonomy->queryTerms()->get();
-            })
-            ->mapWithKeys(function ($term) {
-                $value = $this->fieldtype->usingSingleTaxonomy() ? $term->slug() : $term->id();
-
-                return [$value => $term->title()];
-            });
     }
 }

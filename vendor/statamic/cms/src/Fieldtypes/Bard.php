@@ -182,6 +182,11 @@ class Bard extends Replicator
                         'type' => 'collections',
                         'mode' => 'select',
                     ],
+                    'select_across_sites' => [
+                        'display' => __('Select Across Sites'),
+                        'instructions' => __('statamic::fieldtypes.bard.config.select_across_sites'),
+                        'type' => 'toggle',
+                    ],
                     'container' => [
                         'display' => __('Container'),
                         'instructions' => __('statamic::fieldtypes.bard.config.container'),
@@ -590,7 +595,7 @@ class Bard extends Replicator
             $linkCollections = Blink::once('routable-collection-handles-'.$site, function () use ($site) {
                 return Collection::all()->reject(function ($collection) use ($site) {
                     return is_null($collection->route($site));
-                })->map->handle()->values();
+                })->map->handle()->values()->all();
             });
         }
 

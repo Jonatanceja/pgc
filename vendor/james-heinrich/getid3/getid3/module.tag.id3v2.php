@@ -136,6 +136,7 @@ class getid3_id3v2 extends getid3_handler
 		if (!empty($thisfile_id3v2_flags['isfooter'])) {
 			$sizeofframes -= 10; // footer takes last 10 bytes of ID3v2 header, after frame data, before audio
 		}
+		$sizeofframes = min($sizeofframes, $this->getid3->info['filesize'] - $this->ftell());
 		if ($sizeofframes > 0) {
 
 			$framedata = $this->fread($sizeofframes); // read all frames from file into $framedata variable
@@ -621,8 +622,10 @@ class getid3_id3v2 extends getid3_handler
 				if (!function_exists('gzuncompress')) {
 					$this->warning('gzuncompress() support required to decompress ID3v2 frame "'.$parsedFrame['frame_name'].'"');
 				} else {
-					if ($decompresseddata = @gzuncompress(substr($parsedFrame['data'], 4))) {
-					//if ($decompresseddata = @gzuncompress($parsedFrame['data'])) {
+					// https://github.com/JamesHeinrich/getID3/security/advisories/GHSA-c2xw-vp6w-gpph
+					// Set a limit of 1/4 of PHP memory limit (if known), or default hard cap of 32MB if unknown.
+					$decompression_limit = ($this->getid3->memory_limit > 0) ? (int) round($this->getid3->memory_limit / 4) : 32*1024*1024;
+					if ($decompresseddata = @gzuncompress(substr($parsedFrame['data'], 4), $decompression_limit)) {
 						$parsedFrame['data'] = $decompresseddata;
 						unset($decompresseddata);
 					} else {
@@ -659,7 +662,7 @@ class getid3_id3v2 extends getid3_handler
 			// Owner identifier        <text string> $00
 			// Identifier              <up to 64 bytes binary data>
 			$exploded = explode("\x00", $parsedFrame['data'], 2);
-			$parsedFrame['ownerid'] = (isset($exploded[0]) ? $exploded[0] : '');
+			$parsedFrame['ownerid'] = $exploded[0];
 			$parsedFrame['data']    = (isset($exploded[1]) ? $exploded[1] : '');
 
 		} elseif ((($id3v2_majorversion >= 3) && ($parsedFrame['frame_name'] == 'TXXX')) || // 4.2.2 TXXX User defined text information frame
@@ -679,7 +682,7 @@ class getid3_id3v2 extends getid3_handler
 				$frame_textencoding_terminator = "\x00";
 			}
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+			if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
 			$parsedFrame['description'] = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -771,7 +774,7 @@ class getid3_id3v2 extends getid3_handler
 				$frame_textencoding_terminator = "\x00";
 			}
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+			if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
 			$parsedFrame['encodingid']  = $frame_textencoding;
@@ -998,7 +1001,7 @@ class getid3_id3v2 extends getid3_handler
 				$frame_language = substr($parsedFrame['data'], $frame_offset, 3);
 				$frame_offset += 3;
 				$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-				if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+				if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 					$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 				}
 				$parsedFrame['description'] = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1062,19 +1065,21 @@ class getid3_id3v2 extends getid3_handler
 				if ($frame_terminatorpos === false) {
 					$frame_remainingdata = '';
 				} else {
-					if (ord(substr($frame_remainingdata, $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+					if (substr($frame_remainingdata, $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 						$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 					}
 					$parsedFrame['lyrics'][$timestampindex]['data'] = substr($frame_remainingdata, $frame_offset, $frame_terminatorpos - $frame_offset);
 
 					$frame_remainingdata = substr($frame_remainingdata, $frame_terminatorpos + strlen($frame_textencoding_terminator));
-					if (($timestampindex == 0) && (ord($frame_remainingdata[0]) != 0)) {
-						// timestamp probably omitted for first data item
-					} else {
-						$parsedFrame['lyrics'][$timestampindex]['timestamp'] = getid3_lib::BigEndian2Int(substr($frame_remainingdata, 0, 4));
-						$frame_remainingdata = substr($frame_remainingdata, 4);
+					if (strlen($frame_remainingdata)) { // https://github.com/JamesHeinrich/getID3/issues/444
+						if (($timestampindex == 0) && (ord($frame_remainingdata[0]) != 0)) {
+							// timestamp probably omitted for first data item
+						} else {
+							$parsedFrame['lyrics'][$timestampindex]['timestamp'] = getid3_lib::BigEndian2Int(substr($frame_remainingdata, 0, 4));
+							$frame_remainingdata = substr($frame_remainingdata, 4);
+						}
+						$timestampindex++;
 					}
-					$timestampindex++;
 				}
 			}
 			unset($parsedFrame['data']);
@@ -1106,7 +1111,7 @@ class getid3_id3v2 extends getid3_handler
 				$frame_language = substr($parsedFrame['data'], $frame_offset, 3);
 				$frame_offset += 3;
 				$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-				if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+				if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 					$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 				}
 				$parsedFrame['description'] = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1146,7 +1151,7 @@ class getid3_id3v2 extends getid3_handler
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00");
 			$frame_idstring = substr($parsedFrame['data'], 0, $frame_terminatorpos);
-			if (ord($frame_idstring) === 0) {
+			if ($frame_idstring === "\x00") {
 				$frame_idstring = '';
 			}
 			$frame_remainingdata = substr($parsedFrame['data'], $frame_terminatorpos + strlen("\x00"));
@@ -1277,7 +1282,7 @@ class getid3_id3v2 extends getid3_handler
 			$frame_interpolationmethod = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_idstring = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_idstring) === 0) {
+			if ($frame_idstring === "\x00") {
 				$frame_idstring = '';
 			}
 			$parsedFrame['description'] = $frame_idstring;
@@ -1304,7 +1309,7 @@ class getid3_id3v2 extends getid3_handler
 			// Adjustment            $xx (xx ...)
 
 			$frame_offset = 0;
-			$parsedFrame['adjustmentbits'] = substr($parsedFrame['data'], $frame_offset++, 1);
+			$parsedFrame['adjustmentbits'] = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 			$frame_adjustmentbytes = ceil($parsedFrame['adjustmentbits'] / 8);
 
 			$frame_remainingdata = (string) substr($parsedFrame['data'], $frame_offset);
@@ -1383,7 +1388,7 @@ class getid3_id3v2 extends getid3_handler
 					// MIME type instead of 3-char ID3v2.2-format image type  (thanks xbhoffØpacbell*net)
 					$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 					$frame_mimetype = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-					if (ord($frame_mimetype) === 0) {
+					if ($frame_mimetype === "\x00") {
 						$frame_mimetype = '';
 					}
 					$frame_imagetype = strtoupper(str_replace('image/', '', strtolower($frame_mimetype)));
@@ -1398,7 +1403,7 @@ class getid3_id3v2 extends getid3_handler
 			if ($id3v2_majorversion > 2 && strlen($parsedFrame['data']) > $frame_offset) {
 				$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 				$frame_mimetype = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-				if (ord($frame_mimetype) === 0) {
+				if ($frame_mimetype === "\x00") {
 					$frame_mimetype = '';
 				}
 				$frame_offset = $frame_terminatorpos + strlen("\x00");
@@ -1410,7 +1415,7 @@ class getid3_id3v2 extends getid3_handler
 				$this->warning('data portion of APIC frame is missing at offset '.($parsedFrame['dataoffset'] + 8 + $frame_offset));
 			} else {
 				$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-				if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+				if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 					$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 				}
 				$parsedFrame['description']   = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1517,23 +1522,23 @@ class getid3_id3v2 extends getid3_handler
 			}
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_mimetype = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_mimetype) === 0) {
+			if ($frame_mimetype === "\x00") {
 				$frame_mimetype = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+			if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
 			$frame_filename = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_filename) === 0) {
+			if ($frame_filename === "\x00") {
 				$frame_filename = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen($frame_textencoding_terminator);
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+			if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
 			$parsedFrame['description'] = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1572,7 +1577,7 @@ class getid3_id3v2 extends getid3_handler
 			$frame_offset = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_emailaddress = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_emailaddress) === 0) {
+			if ($frame_emailaddress === "\x00") {
 				$frame_emailaddress = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
@@ -1637,7 +1642,7 @@ class getid3_id3v2 extends getid3_handler
 			$frame_offset = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_ownerid) === 0) {
+			if ($frame_ownerid === "\x00") {
 				$frame_ownerid = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
@@ -1671,7 +1676,7 @@ class getid3_id3v2 extends getid3_handler
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_url = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_url) === 0) {
+			if ($frame_url === "\x00") {
 				$frame_url = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
@@ -1801,17 +1806,17 @@ class getid3_id3v2 extends getid3_handler
 			$frame_receivedasid = ord(substr($parsedFrame['data'], $frame_offset++, 1));
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+			if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
 			$frame_sellername = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_sellername) === 0) {
+			if ($frame_sellername === "\x00") {
 				$frame_sellername = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen($frame_textencoding_terminator);
 
 			$frame_terminatorpos = strpos($parsedFrame['data'], $frame_textencoding_terminator, $frame_offset);
-			if (ord(substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1)) === 0) {
+			if (substr($parsedFrame['data'], $frame_terminatorpos + strlen($frame_textencoding_terminator), 1) === "\x00") {
 				$frame_terminatorpos++; // strpos() fooled because 2nd byte of Unicode chars are often 0x00
 			}
 			$parsedFrame['description'] = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
@@ -1849,7 +1854,7 @@ class getid3_id3v2 extends getid3_handler
 			$frame_offset = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_ownerid) === 0) {
+			if ($frame_ownerid === "\x00") {
 				$frame_ownerid = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
@@ -1872,7 +1877,7 @@ class getid3_id3v2 extends getid3_handler
 			$frame_offset = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_ownerid) === 0) {
+			if ($frame_ownerid === "\x00") {
 				$frame_ownerid = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
@@ -1892,7 +1897,7 @@ class getid3_id3v2 extends getid3_handler
 			$frame_offset = 0;
 			$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 			$frame_ownerid = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
-			if (ord($frame_ownerid) === 0) {
+			if ($frame_ownerid === "\x00") {
 				$frame_ownerid = '';
 			}
 			$frame_offset = $frame_terminatorpos + strlen("\x00");
@@ -1996,7 +2001,7 @@ class getid3_id3v2 extends getid3_handler
 			// <Optional embedded sub-frames>
 
 			$frame_offset = 0;
-			@list($parsedFrame['element_id']) = explode("\x00", $parsedFrame['data'], 2);
+			list($parsedFrame['element_id']) = explode("\x00", $parsedFrame['data'], 2);
 			$frame_offset += strlen($parsedFrame['element_id']."\x00");
 			$parsedFrame['time_begin'] = getid3_lib::BigEndian2Int(substr($parsedFrame['data'], $frame_offset, 4));
 			$frame_offset += 4;
@@ -2064,7 +2069,7 @@ class getid3_id3v2 extends getid3_handler
 							$parsedFrame['subframes'][] = $subframe;
 							break;
 						case 'WXXX':
-							@list($subframe['chapter_url_description'], $subframe['chapter_url']) = explode("\x00", $encoding_converted_text, 2);
+							list($subframe['chapter_url_description'], $subframe['chapter_url']) = array_pad(explode("\x00", $encoding_converted_text, 2), 2, '');
 							$parsedFrame['chapter_url'][$subframe['chapter_url_description']] = $subframe['chapter_url'];
 							$parsedFrame['subframes'][] = $subframe;
 							break;
@@ -2120,7 +2125,7 @@ class getid3_id3v2 extends getid3_handler
 			// <Optional embedded sub-frames>
 
 			$frame_offset = 0;
-			@list($parsedFrame['element_id']) = explode("\x00", $parsedFrame['data'], 2);
+			list($parsedFrame['element_id']) = explode("\x00", $parsedFrame['data'], 2);
 			$frame_offset += strlen($parsedFrame['element_id']."\x00");
 			$ctoc_flags_raw = ord(substr($parsedFrame['data'], $frame_offset, 1));
 			$frame_offset += 1;

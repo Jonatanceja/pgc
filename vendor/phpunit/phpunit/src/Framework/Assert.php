@@ -935,6 +935,8 @@ abstract class Assert
     /**
      * Asserts that two variables are equal.
      *
+     * Comparison is performed using the == operator (loose comparison) and may be performed by a type-specific comparator which may apply type coercion.
+     *
      * @throws ExpectationFailedException
      */
     final public static function assertEquals(mixed $expected, mixed $actual, string $message = ''): void
@@ -946,6 +948,8 @@ abstract class Assert
 
     /**
      * Asserts that two variables are equal (canonicalizing).
+     *
+     * Comparison is performed using the == operator (loose comparison) and may be performed by a type-specific comparator which may apply type coercion.
      *
      * @throws ExpectationFailedException
      */
@@ -959,6 +963,8 @@ abstract class Assert
     /**
      * Asserts that two variables are equal (ignoring case).
      *
+     * Comparison is performed using the == operator (loose comparison) and may be performed by a type-specific comparator which may apply type coercion.
+     *
      * @throws ExpectationFailedException
      */
     final public static function assertEqualsIgnoringCase(mixed $expected, mixed $actual, string $message = ''): void
@@ -970,6 +976,8 @@ abstract class Assert
 
     /**
      * Asserts that two variables are equal (with delta).
+     *
+     * Comparison is performed using the == operator (loose comparison) and may be performed by a type-specific comparator which may apply type coercion.
      *
      * @throws ExpectationFailedException
      */
@@ -986,6 +994,8 @@ abstract class Assert
     /**
      * Asserts that two variables are not equal.
      *
+     * Comparison is performed using the == operator (loose comparison) and may be performed by a type-specific comparator which may apply type coercion.
+     *
      * @throws ExpectationFailedException
      */
     final public static function assertNotEquals(mixed $expected, mixed $actual, string $message = ''): void
@@ -999,6 +1009,8 @@ abstract class Assert
 
     /**
      * Asserts that two variables are not equal (canonicalizing).
+     *
+     * Comparison is performed using the == operator (loose comparison) and may be performed by a type-specific comparator which may apply type coercion.
      *
      * @throws ExpectationFailedException
      */
@@ -1014,6 +1026,8 @@ abstract class Assert
     /**
      * Asserts that two variables are not equal (ignoring case).
      *
+     * Comparison is performed using the == operator (loose comparison) and may be performed by a type-specific comparator which may apply type coercion.
+     *
      * @throws ExpectationFailedException
      */
     final public static function assertNotEqualsIgnoringCase(mixed $expected, mixed $actual, string $message = ''): void
@@ -1027,6 +1041,8 @@ abstract class Assert
 
     /**
      * Asserts that two variables are not equal (with delta).
+     *
+     * Comparison is performed using the == operator (loose comparison) and may be performed by a type-specific comparator which may apply type coercion.
      *
      * @throws ExpectationFailedException
      */
@@ -1073,8 +1089,6 @@ abstract class Assert
      *
      * @throws ExpectationFailedException
      * @throws GeneratorNotSupportedException
-     *
-     * @phpstan-assert empty $actual
      */
     final public static function assertEmpty(mixed $actual, string $message = ''): void
     {
@@ -1090,8 +1104,6 @@ abstract class Assert
      *
      * @throws ExpectationFailedException
      * @throws GeneratorNotSupportedException
-     *
-     * @phpstan-assert !empty $actual
      */
     final public static function assertNotEmpty(mixed $actual, string $message = ''): void
     {
@@ -1651,6 +1663,8 @@ abstract class Assert
      * Used on objects, it asserts that two variables reference
      * the same object.
      *
+     * Comparison is performed using the === operator.
+     *
      * @template ExpectedType
      *
      * @param ExpectedType $expected
@@ -1672,6 +1686,8 @@ abstract class Assert
      * Asserts that two variables do not have the same type and value.
      * Used on objects, it asserts that two variables do not reference
      * the same object.
+     *
+     * Comparison is performed using the === operator.
      *
      * @throws ExpectationFailedException
      */
@@ -3149,7 +3165,7 @@ abstract class Assert
     {
         return match ($type) {
             'numeric', 'integer', 'int', 'iterable', 'float', 'string', 'boolean', 'bool', 'null', 'array', 'object', 'resource', 'scalar' => true,
-            default => false,
+            default                                                                                                                        => false,
         };
     }
 }

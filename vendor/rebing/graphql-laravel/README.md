@@ -63,6 +63,7 @@ config/graphql.php
       - [GraphQL resolver middleware](#graphql-resolver-middleware)
     - [Schemas](#schemas)
       - [Schema classes](#schema-classes)
+      - [Route attributes](#route-attributes)
     - [Creating a query](#creating-a-query)
     - [Creating a mutation](#creating-a-mutation)
       - [File uploads](#file-uploads)
@@ -245,7 +246,7 @@ schemas and assign different **HTTP middleware** and **execution middleware** to
 them, in addition to the global middleware. For example:
 
 ```php
-'schema' => 'default',
+'default_schema' => 'default',
 
 'schemas' => [
     'default' => [
@@ -275,6 +276,11 @@ them, in addition to the global middleware. For example:
         'execution_middleware' => [
             \Rebing\GraphQL\Support\ExecutionMiddleware\UnusedVariablesMiddleware::class,
         ],
+        // Route attributes applied to the generated HTTP route for this schema
+        // Example: expose this schema on a dedicated subdomain
+        'route_attributes' => [
+            'domain' => 'api.example.com',
+        ],
     ],
 ],
 ```
@@ -284,6 +290,24 @@ which it is accessible. Per the default configuration of `prefix = graphql`, the
 _default_ schema is accessible via `/graphql`.
 
 
+#### Route attributes
+
+You can customize the HTTP route generated for a specific schema using the `route_attributes` key.
+This is useful for setting parameters supported by Laravel routes, e.g. a custom `domain`.
+
+```php
+'schemas' => [
+    'with_custom_domain' => [
+        'query' => [
+            App\GraphQL\Queries\UsersQuery::class,
+        ],
+        'middleware' => ['auth:api'],
+        'route_attributes' => [
+            'domain' => 'api.example.com',
+        ],
+    ],
+]
+```
 
 
 #### Schema classes
@@ -1895,6 +1919,37 @@ class PostsQuery extends Query
 }
 ```
 
+[Cursor Pagination](https://laravel.com/docs/pagination#cursor-pagination) will be used, if a query or mutation returns a `CursorPaginationType`.
+
+```php
+namespace App\GraphQL\Queries;
+
+use Closure;
+use GraphQL\Type\Definition\ResolveInfo;
+use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\Facades\GraphQL;
+use Rebing\GraphQL\Support\Query;
+
+class PostsQuery extends Query
+{
+    public function type(): Type
+    {
+        return GraphQL::cursorPaginate('posts');
+    }
+
+    // ...
+
+    public function resolve($root, array $args, $context, ResolveInfo $info, Closure $getSelectFields)
+    {
+        $fields = $getSelectFields();
+
+        return Post::with($fields->getRelations())
+            ->select($fields->getSelect())
+            ->cursorPaginate($args['limit'], ['*'], 'cursorName', $args['cursor']);
+    }
+}
+```
+
 ### Batching
 
 Batched requests are required to be sent via a POST request.
@@ -2005,7 +2060,7 @@ class EpisodeEnum extends EnumType
 > will be able to choose from, while the value is what will your server receive (what will enum
 > be resolved to).
 
-The Enum will be registered like any other type in your schema in `config/graphq.php`:
+The Enum will be registered like any other type in your schema in `config/graphql.php`:
 
 ```php
 'schemas' => [
@@ -2266,7 +2321,7 @@ class ReviewInput extends InputType
 }
 ```
 
-The Input Object will be registered like any other type in your schema in `config/graphq.php`:
+The Input Object will be registered like any other type in your schema in `config/graphql.php`:
 
 ```php
 'schemas' => [
@@ -2292,6 +2347,112 @@ class TestMutation extends GraphQLType {
 
 }
 ```
+
+### OneOf Input Objects
+
+OneOf Input Objects are a special type of input object where **exactly one field** must be provided. This is useful for creating polymorphic inputs or "input unions" where you want to accept one of several possible input types.
+Read more about OneOf in the [RFC](https://github.com/graphql/graphql-spec/pull/825) or in the [GraphQL PHP Documentation](https://webonyx.github.io/graphql-php/type-definitions/inputs/#using-the-isoneof-configuration-option)
+
+#### Creating a OneOf Input Type
+
+Create a OneOf Input Type by setting `'isOneOf' => true` in the attributes:
+
+```php
+namespace App\GraphQL\InputObject;
+
+use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\InputType;
+
+class SearchInput extends InputType
+{
+    protected $attributes = [
+        'name' => 'SearchInput',
+        'description' => 'Search by exactly one criteria',
+        'isOneOf' => true,
+    ];
+
+    public function fields(): array
+    {
+        return [
+            'byId' => [
+                'type' => Type::id(),
+                'description' => 'Search by user ID',
+            ],
+            'byEmail' => [
+                'type' => Type::string(),
+                'description' => 'Search by email address',
+            ],
+            'byUsername' => [
+                'type' => Type::string(),
+                'description' => 'Search by username',
+            ],
+        ];
+    }
+}
+```
+
+#### Using OneOf Input Types
+```php
+namespace App\GraphQL\Queries;
+
+use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\Facades\GraphQL;
+use Rebing\GraphQL\Support\Query;
+use App\Models\User;
+
+class UserQuery extends Query
+{
+    protected $attributes = [
+        'name' => 'user',
+        'description' => 'Find a user by search criteria'
+    ];
+
+    public function type(): Type
+    {
+        return GraphQL::type('User');
+    }
+
+    public function args(): array
+    {
+        return [
+            'search' => [
+                'type' => Type::nonNull(GraphQL::type('SearchInput')),
+                'description' => 'Search criteria (exactly one field required)',
+            ],
+        ];
+    }
+
+    public function resolve($root, array $args)
+    {
+        $search = $args['search'];
+
+        // Exactly one of these will be set
+        if (isset($search['byId'])) {
+            return User::find($search['byId']);
+        }
+
+        if (isset($search['byEmail'])) {
+            return User::where('email', $search['byEmail'])->first();
+        }
+
+        if (isset($search['byUsername'])) {
+            return User::where('username', $search['byUsername'])->first();
+        }
+
+        return null;
+    }
+}
+```
+
+#### Generating OneOf Input Types
+
+You can generate a OneOf input type using the Artisan command with the `--oneof` flag:
+
+```bash
+php artisan make:graphql:input SearchInput --oneof
+```
+
+This will create a new input type with `'isOneOf' => true` already configured.
 
 ### Type modifiers
 

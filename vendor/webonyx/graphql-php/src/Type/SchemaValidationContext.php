@@ -77,6 +77,30 @@ class SchemaValidationContext
         $this->schema->getSubscriptionType();
     }
 
+    public function validateScalarOverrides(): void
+    {
+        $scalarOverrides = $this->schema->getConfig()->scalarOverrides;
+        if ($scalarOverrides === null) {
+            return;
+        }
+
+        foreach ($scalarOverrides as $scalarOverride) {
+            // @phpstan-ignore-next-line not strictly enforceable unless PHP gets generics
+            if (! $scalarOverride instanceof ScalarType) {
+                $scalarTypeClass = ScalarType::class;
+                $notScalarType = Utils::printSafe($scalarOverride);
+                $this->reportError("Expected scalar override to be instanceof {$scalarTypeClass}, got: {$notScalarType}.");
+
+                continue;
+            }
+
+            if (! Type::isBuiltInScalarName($scalarOverride->name)) {
+                $builtInScalarNames = implode(', ', Type::BUILT_IN_SCALAR_NAMES);
+                $this->reportError("Expected scalar override to be named after a built-in scalar ({$builtInScalarNames}), got: {$scalarOverride->name}.", $scalarOverride->astNode);
+            }
+        }
+    }
+
     /** @param array<Node|null>|Node|null $nodes */
     public function reportError(string $message, $nodes = null): void
     {
@@ -769,7 +793,7 @@ class SchemaValidationContext
 
             // Ensure valid name.
             $this->validateName($enumValue);
-            if ($valueName === 'true' || $valueName === 'false' || $valueName === 'null') {
+            if (in_array($valueName, ['true', 'false', 'null'], true)) {
                 $this->reportError(
                     "Enum type {$enumType->name} cannot include value: {$valueName}.",
                     $enumValue->astNode
@@ -835,7 +859,6 @@ class SchemaValidationContext
         }
 
         $namedType = Type::getNamedType($type);
-        assert($namedType !== null, 'because getNamedType() was called with non-null type');
         if ($namedType->isBuiltInType()) {
             return;
         }

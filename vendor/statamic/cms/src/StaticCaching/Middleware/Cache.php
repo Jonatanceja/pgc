@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Statamic\Facades\StaticCache;
 use Statamic\Statamic;
 use Statamic\StaticCaching\Cacher;
+use Statamic\StaticCaching\Cachers\AbstractCacher;
 use Statamic\StaticCaching\Cachers\ApplicationCacher;
 use Statamic\StaticCaching\Cachers\FileCacher;
 use Statamic\StaticCaching\Cachers\NullCacher;
@@ -184,6 +185,7 @@ class Cache
             $response->headers->has('X-Statamic-Draft')
             || $response->headers->has('X-Statamic-Private')
             || $response->headers->has('X-Statamic-Protected')
+            || $response->headers->has('X-Statamic-Uncacheable')
         ) {
             return false;
         }
@@ -198,6 +200,10 @@ class Cache
             return false;
         }
 
+        if ($this->cacher instanceof AbstractCacher && $this->cacher->isExcluded($this->cacher->getUrl($request))) {
+            return false;
+        }
+
         return true;
     }
 
@@ -209,7 +215,7 @@ class Cache
             $store = AppCache::store('null');
         } else {
             $store = StaticCache::cacheStore();
-            $key .= '-'.$this->cacher->getUrl($request);
+            $key .= '-'.md5($this->cacher->getUrl($request));
         }
 
         return $store->lock($key, $this->lockFor);

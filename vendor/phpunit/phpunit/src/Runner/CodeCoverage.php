@@ -114,7 +114,7 @@ final class CodeCoverage
                 );
             } else {
                 EventFacade::emitter()->testRunnerTriggeredPhpunitWarning(
-                    'Incorrect filter configuration, code coverage will not be processed',
+                    'Configured filter does not match any files, code coverage will not be processed',
                 );
             }
 
@@ -123,7 +123,7 @@ final class CodeCoverage
     }
 
     /**
-     * @phpstan-assert-if-true !null $this->instance
+     * @phpstan-assert-if-true !null $this->codeCoverage
      */
     public function isActive(): bool
     {
@@ -229,7 +229,7 @@ final class CodeCoverage
 
             try {
                 $writer = new CloverReport;
-                $writer->process($this->codeCoverage(), $configuration->coverageClover());
+                $writer->process($this->codeCoverage(), $configuration->coverageClover(), 'Clover Coverage');
 
                 $this->codeCoverageGenerationSucceeded($printer);
 

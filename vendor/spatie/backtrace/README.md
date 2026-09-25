@@ -64,7 +64,7 @@ A `Spatie\Backtrace\Frame` has these properties:
 - `method`: the method used in this frame
 - `object`: the object when the frame is in an object context (method call, closure bound to object, arrow function which captured `$this`, etc.). Will be `null` if `withObject` was not used.
 - `applicationFrame`: contains `true` is this frame belongs to your application, and `false` if it belongs to a file in
-  the vendor directory
+  the vendor directory. A couple edge cases exist, see "application frames" below.
 
 ### Collecting arguments and objects
 
@@ -132,6 +132,13 @@ You can use `trimFilePaths` to remove the base path of your app from the file. T
 $backtrace = Backtrace::create()->applicationPath(base_path())->trimFilePaths());
 ```
 
+### Application frames
+
+By default, a frame is considered an application frame when the file of the frame is not in the vendor directory. The following edge cases apply:
+
+- Laravel's `artisan` CLI file (generally found in the root of the project) is considered a vendor file and frame
+- Statamic's `please` CLI file (generally found in the root of the project) is considered a vendor file and frame
+
 ### Getting a certain part of a trace
 
 If you only want to have the frames starting from a particular frame in the backtrace you can use
@@ -176,7 +183,10 @@ Here's how you can get a backtrace for a throwable.
 $frames = Spatie\Backtrace\Backtrace::createForThrowable($throwable)
 ```
 
-Because we will use the backtrace that is already available the throwable, the frames will always contain the arguments used.
+Because we will use the backtrace that is already available in the throwable, the frames will contain the arguments used
+in the backtrace as long as the `zend.exception_ignore_args` INI option is disabled (set to `0`) *before* the throwable
+is thrown. On the other hand, objects will never be included in the backtrace. 
+[More information](https://www.php.net/manual/en/throwable.gettrace.php#129087).
 
 ## Testing
 

@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\InvalidStateException;
+use Statamic\Exceptions\NotFoundHttpException;
 use Statamic\Facades\OAuth;
+use Statamic\Facades\URL;
+use Statamic\Facades\User;
 use Statamic\Support\Arr;
 use Statamic\Support\Str;
 
@@ -14,8 +17,12 @@ class OAuthController
 {
     public function redirectToProvider(Request $request, string $provider)
     {
-        $referer = $request->headers->get('referer');
+        $referer = $request->headers->get('referer') ?? '';
         $guard = config('statamic.users.guards.web', 'web');
+
+        if (! OAuth::providers()->has($provider)) {
+            throw new NotFoundHttpException();
+        }
 
         if (Str::startsWith(parse_url($referer)['path'], Str::ensureLeft(config('statamic.cp.route'), '/'))) {
             $guard = config('statamic.users.guards.cp', 'web');
@@ -30,6 +37,10 @@ class OAuthController
     {
         $oauth = OAuth::provider($provider);
 
+        if (! $oauth) {
+            throw new NotFoundHttpException();
+        }
+
         try {
             $providerUser = $oauth->getSocialiteUser();
         } catch (InvalidStateException $e) {
@@ -40,7 +51,7 @@ class OAuthController
             if (config('statamic.oauth.merge_user_data', true)) {
                 $user = $oauth->mergeUser($user, $providerUser);
             }
-        } elseif (config('statamic.oauth.create_user', true)) {
+        } elseif (config('statamic.oauth.create_user', true) && ! User::findByEmail($providerUser->getEmail())) {
             $user = $oauth->createUser($providerUser);
         }
 
@@ -68,7 +79,9 @@ class OAuthController
 
         parse_str($query, $query);
 
-        return Arr::get($query, 'redirect', $default);
+        $redirect = Arr::get($query, 'redirect', $default);
+
+        return URL::isExternalToApplication($redirect) ? $default : $redirect;
     }
 
     protected function unauthorizedRedirectUrl()

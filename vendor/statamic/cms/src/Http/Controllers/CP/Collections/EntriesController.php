@@ -9,6 +9,7 @@ use Statamic\CP\Breadcrumbs;
 use Statamic\Exceptions\BlueprintNotFoundException;
 use Statamic\Facades\Action;
 use Statamic\Facades\Asset;
+use Statamic\Facades\Blink;
 use Statamic\Facades\Entry;
 use Statamic\Facades\Site;
 use Statamic\Facades\Stache;
@@ -18,6 +19,7 @@ use Statamic\Http\Controllers\CP\CpController;
 use Statamic\Http\Requests\FilteredRequest;
 use Statamic\Http\Resources\CP\Entries\Entries;
 use Statamic\Http\Resources\CP\Entries\Entry as EntryResource;
+use Statamic\Query\OrderBy;
 use Statamic\Query\Scopes\Filters\Concerns\QueriesFilters;
 use Statamic\Support\Arr;
 use Statamic\Support\Str;
@@ -38,7 +40,7 @@ class EntriesController extends CpController
             'blueprints' => $collection->entryBlueprints()->map->handle(),
         ]);
 
-        $sortField = request('sort');
+        $sortField = OrderBy::column(request('sort'));
         $sortDirection = request('order', 'asc');
 
         if (! $sortField && ! request('search')) {
@@ -93,6 +95,7 @@ class EntriesController extends CpController
 
         $entry = $entry->fromWorkingCopy();
 
+        Blink::forget("entry-{$entry->id()}-blueprint");
         $blueprint = $entry->blueprint();
 
         if (! $blueprint) {

@@ -1,5 +1,667 @@
 # Release Notes
 
+## 5.74.4 (2026-08-12)
+
+### What's fixed
+- Hash URL in static caching lock key [#15061](https://github.com/statamic/cms/issues/15061) by @david-windsock
+- Tighten get modifier [#15138](https://github.com/statamic/cms/issues/15138) by @jasonvarga
+- Harden SVG sanitization [#15137](https://github.com/statamic/cms/issues/15137) by @jasonvarga
+- Tighten Antlers variable path resolution [#15154](https://github.com/statamic/cms/issues/15154) by @jasonvarga
+
+
+
+## 5.74.3 (2026-07-08)
+
+### What's fixed
+- Escape submitted values in automagic email [#14959](https://github.com/statamic/cms/issues/14959) by @jasonvarga
+- Tighten front-end form upload validation [#14958](https://github.com/statamic/cms/issues/14958) by @jasonvarga
+
+
+
+## 5.74.2 (2026-07-03)
+
+### What's fixed
+- Fix roles/groups select being empty for non-super users [#14889](https://github.com/statamic/cms/issues/14889) by @mynetx
+
+
+
+## 5.74.1 (2026-07-01)
+
+### What's fixed
+- Tighten up dynamic method resolution [#14911](https://github.com/statamic/cms/issues/14911) by @jasonvarga
+- Fix nav authorization checks [#14906](https://github.com/statamic/cms/issues/14906) by @jasonvarga
+- Fix user wizard authorization check [#14905](https://github.com/statamic/cms/issues/14905) by @jasonvarga
+- Fix failing Guzzle tests [#14897](https://github.com/statamic/cms/issues/14897) by @jasonvarga
+- Fix OAuth [#14887](https://github.com/statamic/cms/issues/14887) by @jasonvarga
+
+
+
+## 5.74.0 (2026-06-08)
+
+### What's fixed
+- Drop support for Laravel 10/11 [#14793](https://github.com/statamic/cms/issues/14793) by @jasonvarga
+- Fix permission for Live Preview [#14791](https://github.com/statamic/cms/issues/14791) by @jasonvarga
+
+
+
+## 5.73.24 (2026-06-02)
+
+### What's fixed
+- Escape formula characters in form submission CSV exports [#14760](https://github.com/statamic/cms/issues/14760) by @jasonvarga
+- Harden remote URL validation [#14761](https://github.com/statamic/cms/issues/14761) by @jasonvarga
+- Fix Bard/Link Blink cache type collision [#14739](https://github.com/statamic/cms/issues/14739) by @simonerd
+
+
+
+## 5.73.23 (2026-05-22)
+
+### What's fixed
+- Harden `DataCollection` sort value resolution [#14693](https://github.com/statamic/cms/issues/14693) by @duncanmcclean
+- Fix token path traversal [#14700](https://github.com/statamic/cms/issues/14700) by @duncanmcclean
+- Authorize relationship fieldtype data [#14718](https://github.com/statamic/cms/issues/14718) by @jasonvarga
+- Fix asset fieldtype icon [#14720](https://github.com/statamic/cms/issues/14720) by @jasonvarga
+
+
+
+## 5.73.22 (2026-05-11)
+
+### What's fixed
+- Harden remote URL validation [#14645](https://github.com/statamic/cms/issues/14645) by @jasonvarga
+
+
+
+## 5.73.21 (2026-04-27)
+
+### What's fixed
+- Always show success when using forgot password form [#14539](https://github.com/statamic/cms/issues/14539) by @jasonvarga
+
+
+
+## 5.73.20 (2026-04-13)
+
+### What's fixed
+- Harden query value resolution [#14476](https://github.com/statamic/cms/issues/14476) by @duncanmcclean
+- Harden OrderBys [#14474](https://github.com/statamic/cms/issues/14474) by @duncanmcclean
+- Remove negative assertions from `TestCase` [#14458](https://github.com/statamic/cms/issues/14458) by @duncanmcclean
+
+
+
+## 5.73.19 (2026-04-07)
+
+### What's fixed
+- Add `link` tag to allowed Antlers tags [#14438](https://github.com/statamic/cms/issues/14438) by @edalzell
+- Add `@default` support to Antlers content allowlists [#14440](https://github.com/statamic/cms/issues/14440) by @jasonvarga
+- Fix Stache index re-entrancy causing null URIs on cold stache [#14181](https://github.com/statamic/cms/issues/14181) by @o1y
+- Fix form submission types [#14430](https://github.com/statamic/cms/issues/14430) by @daun
+
+
+
+## 5.73.18 (2026-04-02)
+
+### What's fixed
+- Harden OrderBys [#14421](https://github.com/statamic/cms/issues/14421) by @jasonvarga
+
+
+
+## 5.73.17 (2026-03-25)
+
+### What's fixed
+- Fix term revisions error [#14347](https://github.com/statamic/cms/issues/14347) by @duncanmcclean
+
+
+
+## 5.73.16 (2026-03-24)
+
+### What's fixed
+- Fix config through Antlers views [#14328](https://github.com/statamic/cms/issues/14328) by @jasonvarga
+- Sanitize password reset form redirect value [#14327](https://github.com/statamic/cms/issues/14327) by @jasonvarga
+- Restrict markdown preview endpoint [#14326](https://github.com/statamic/cms/issues/14326) by @jasonvarga
+- Add authorization to revision routes [#14301](https://github.com/statamic/cms/issues/14301) by @duncanmcclean
+- Add CSP header to svg route [#14325](https://github.com/statamic/cms/issues/14325) by @jasonvarga
+- Relationship fieldtype authorization tweaks [#14307](https://github.com/statamic/cms/issues/14307) by @duncanmcclean
+- Allow external redirects from Form::getSubmissionRedirect [#14318](https://github.com/statamic/cms/issues/14318) by @jasonvarga
+- Handle more cases in external url detection [#14312](https://github.com/statamic/cms/issues/14312) by @jasonvarga
+- Fix live preview token scope [#14304](https://github.com/statamic/cms/issues/14304) by @jasonvarga
+- Fix PHP sanitization edge cases [#14300](https://github.com/statamic/cms/issues/14300) by @duncanmcclean
+
+
+
+## 5.73.15 (2026-03-18)
+
+### What's fixed
+- Harden password reset [#14296](https://github.com/statamic/cms/issues/14296) by @jasonvarga
+- Add additional `URL::isExternalToApplication()` tests [#14288](https://github.com/statamic/cms/issues/14288) by @duncanmcclean
+
+
+
+## 5.73.14 (2026-03-17)
+
+### What's fixed
+- Prevent term creation via fieldtype without permission [#14274](https://github.com/statamic/cms/issues/14274) by @duncanmcclean
+- Prevent path traversal in file dictionary [#14272](https://github.com/statamic/cms/issues/14272) by @duncanmcclean
+- Sanitize SVGs on asset reupload [#14270](https://github.com/statamic/cms/issues/14270) by @jasonvarga
+
+
+
+## 5.73.13 (2026-03-13)
+
+### What's fixed
+- Relationship endpoint authorization [#14254](https://github.com/statamic/cms/issues/14254) by @jasonvarga
+- Fix ensure field has config [#14195](https://github.com/statamic/cms/issues/14195) by @marcorieser
+- Removed a comment from the js code output of the StaticCacher [#14233](https://github.com/statamic/cms/issues/14233) by @micahhenshaw
+- Acquire stache-warming lock in Duplicates::find [#14176](https://github.com/statamic/cms/issues/14176) by @mmodler
+
+
+
+## 5.73.12 (2026-03-04)
+
+### What's fixed
+- Antlers config backwards compatibility [#14146](https://github.com/statamic/cms/issues/14146) by @jasonvarga
+- Config parsing exclusion [#14152](https://github.com/statamic/cms/issues/14152) by @jasonvarga
+- Fix Antlers parser state restoration [#14151](https://github.com/statamic/cms/issues/14151) by @jasonvarga
+- Support Laravel Debugbar 4 [#14142](https://github.com/statamic/cms/issues/14142) by @jasonvarga
+- Remove pdf css [#14141](https://github.com/statamic/cms/issues/14141) by @jasonvarga
+- More Antlers defaults [#14125](https://github.com/statamic/cms/issues/14125) by @jasonvarga
+
+
+
+## 5.73.11 (2026-02-27)
+
+**This release contains a potentially breaking change for the sake of security.**
+
+### What's fixed
+- Antlers hardening (Breaking: See PR for upgrade notes) [#14092](https://github.com/statamic/cms/issues/14092) by @jasonvarga
+- External Glide URL validation [#14101](https://github.com/statamic/cms/issues/14101) by @jasonvarga
+- Harden redirects [#14099](https://github.com/statamic/cms/issues/14099) by @jasonvarga
+- Harden auth redirects [#14089](https://github.com/statamic/cms/issues/14089) by @duncanmcclean
+- Fix user fieldtype search [#14084](https://github.com/statamic/cms/issues/14084) by @duncanmcclean
+- Fix user name and email logic [#14079](https://github.com/statamic/cms/issues/14079) by @jasonvarga
+- Sanitize SVGs [#14077](https://github.com/statamic/cms/issues/14077) by @jasonvarga
+- Fix CSRF token on pages excluded from static caching [#14056](https://github.com/statamic/cms/issues/14056) by @duncanmcclean
+- Improve PDF Viewer [#14045](https://github.com/statamic/cms/issues/14045) by @duncanmcclean
+- Throw UnableToReadFile for invalid images in ImageGenerator [#14043](https://github.com/statamic/cms/issues/14043) by @mmodler
+- Antlers user content and config [#14058](https://github.com/statamic/cms/issues/14058) by @jasonvarga
+- Block methods in Antlers by default [#14059](https://github.com/statamic/cms/issues/14059) by @jasonvarga
+
+
+
+## 5.73.10 (2026-02-20)
+
+### What's fixed
+- Fixes `shouldUpdateUris` regex adding additional brackets to Antlers [#13995](https://github.com/statamic/cms/issues/13995) by @martyf
+- Validate password reset url [#14023](https://github.com/statamic/cms/issues/14023) [#14008](https://github.com/statamic/cms/issues/14008) by @jasonvarga
+- Harden html rendering [#14006](https://github.com/statamic/cms/issues/14006) by @jasonvarga
+
+
+
+## 5.73.9 (2026-02-18)
+
+### What's fixed
+- Correct test namespaces to avoid PSR-4 warnings [#13989](https://github.com/statamic/cms/issues/13989) by @duncanmcclean
+- Sanitize html in html fieldtype [#13992](https://github.com/statamic/cms/issues/13992) by @jasonvarga
+
+
+
+## 5.73.8 (2026-02-18)
+
+### What's fixed
+- Avoid replacing nocache regions in initial full-measure response [#13953](https://github.com/statamic/cms/issues/13953) by @duncanmcclean
+- Fix Icon fieldtype augment error when value is empty [#13966](https://github.com/statamic/cms/issues/13966) by @jhhazelaar
+- Fix `whereIn()`/`whereNotIn()` error for booleans [#13952](https://github.com/statamic/cms/issues/13952) by @duncanmcclean
+
+
+
+## 5.73.7 (2026-02-13)
+
+### What's fixed
+- Revert etags [#13933](https://github.com/statamic/cms/issues/13933) by @jasonvarga
+
+
+
+## 5.73.6 (2026-02-11)
+
+### What's fixed
+- Fix after_save preference not persisting when default preferences override 'listing' [#13879](https://github.com/statamic/cms/issues/13879) by @el-schneider
+- Asset auth fix [#13883](https://github.com/statamic/cms/issues/13883) by @duncanmcclean
+- Account for custom fields when checking if entry URIs should be updated [#13859](https://github.com/statamic/cms/issues/13859) by @duncanmcclean
+
+
+
+## 5.73.5 (2026-02-03)
+
+### What's fixed
+- Add auth to asset routes [#13810](https://github.com/statamic/cms/issues/13810) by @jasonvarga
+
+
+
+## 5.73.4 (2026-02-03)
+
+### What's fixed
+- Handle `0` values in text fields and `null` string in slugs [#13786](https://github.com/statamic/cms/issues/13786) by @joshuablum
+- Fix multi-site URL invalidation in `ApplicationCacher` [#13793](https://github.com/statamic/cms/issues/13793) by @joshuablum
+
+
+
+## 5.73.3 (2026-01-30)
+
+### What's fixed
+- Avoid showing large number of assets in listing [#13758](https://github.com/statamic/cms/issues/13758) by @jasonvarga
+- Abort 404 when asset is not found in AssetsController [#13741](https://github.com/statamic/cms/issues/13741) by @mynetx
+
+
+
+## 5.73.2 (2026-01-26)
+
+### What's fixed
+- Revert `AssetContainer::accessible()` visibility change [#13673](https://github.com/statamic/cms/issues/13673) by @duncanmcclean
+- Fix: Prevent 304 responses without client cache headers [#13654](https://github.com/statamic/cms/issues/13654) by @mynetx
+- Fix uninitialized property error from `HandleEntrySchedule` job [#13648](https://github.com/statamic/cms/issues/13648) by @duncanmcclean
+- Bump lodash from 4.17.21 to 4.17.23 [#13628](https://github.com/statamic/cms/issues/13628) by @dependabot
+- Avoid updating Bard value unless content has actually changed [#13645](https://github.com/statamic/cms/issues/13645) by @duncanmcclean
+
+
+
+## 5.73.1 (2026-01-21)
+
+### What's fixed
+- Revert config values in forms [#13632](https://github.com/statamic/cms/issues/13632) by @jasonvarga
+
+
+
+## 5.73.0 (2026-01-21)
+
+### What's new
+- ~Allow config values to be used in forms~ (Reverted in 5.73.1) [#11403](https://github.com/statamic/cms/issues/11403) by @FrittenKeeZ
+- Allow closure in cascade content hydration [#13580](https://github.com/statamic/cms/issues/13580) by @marcorieser
+
+### What's fixed
+- ~`AssetContainer::accessible()` should take filesystem visibility into account~ (Reverted in 5.73.2) [#13621](https://github.com/statamic/cms/issues/13621) by @duncanmcclean
+- Augment appended form config fields for Antlers [#13111](https://github.com/statamic/cms/issues/13111) by @marcorieser
+- Fix error from `DefaultInvalidator` when creating a nav [#13596](https://github.com/statamic/cms/issues/13596) by @duncanmcclean
+- Prevent redirect when creating term via fieldtype [#13595](https://github.com/statamic/cms/issues/13595) by @duncanmcclean
+- Handle null value gracefully [#13598](https://github.com/statamic/cms/issues/13598) by @aerni
+- Fix existing field validation with prefixed fieldset imports [#13551](https://github.com/statamic/cms/issues/13551) by @duncanmcclean
+
+
+
+## 5.72.0 (2026-01-13)
+
+### What's new
+- Support query scopes in navigations [#13509](https://github.com/statamic/cms/issues/13509) by @el-schneider
+
+### What's fixed
+- Generate etag after nocache replacements [#13433](https://github.com/statamic/cms/issues/13433) by @mmodler
+- Support custom validation rules for asset containers [#13459](https://github.com/statamic/cms/issues/13459) by @duncanmcclean
+- Fix filterWhere with arrays [#13507](https://github.com/statamic/cms/issues/13507) by @aerni
+- Dutch translations [#13532](https://github.com/statamic/cms/issues/13532) by @laurenskr
+
+
+
+## 5.71.0 (2026-01-08)
+
+### What's new
+- PHP 8.5 Compatibility [#13112](https://github.com/statamic/cms/issues/13112) by @duncanmcclean
+- Add ability to get raw array directly from Values object [#13318](https://github.com/statamic/cms/issues/13318) by @andjsch
+- Make GetItemsContainingData hookable [#13302](https://github.com/statamic/cms/issues/13302) by @ryanmitchell
+
+### What's fixed
+- Fix structure not being saved to collection [#13479](https://github.com/statamic/cms/issues/13479) by @jasonvarga
+- Fix JsDriver::addToFormData call to match interface signature [#13463](https://github.com/statamic/cms/issues/13463) by @andrii-trush
+- Fix add set button not overlap content on small container [#13269](https://github.com/statamic/cms/issues/13269) by @lecoa
+- Terms Filter: Use `terms` fieldtype instead of `select` [#13439](https://github.com/statamic/cms/issues/13439) by @duncanmcclean
+- Fix blueprint cache [#13430](https://github.com/statamic/cms/issues/13430) by @aerni
+- Add `Nav::clearCachedUrls` expectation to `AddonTestCase` [#13396](https://github.com/statamic/cms/issues/13396) by @duncanmcclean
+- Remove "Bulgarian Lev" from Currencies dictionary [#13414](https://github.com/statamic/cms/issues/13414) by @duncanmcclean
+- Ensure field parent is set correctly [#13305](https://github.com/statamic/cms/issues/13305) by @aerni
+- Invalidate nav's URL cache when collection/taxonomy/etc is created [#13297](https://github.com/statamic/cms/issues/13297) by @duncanmcclean
+- Fix whereNotIn error with nulls [#13266](https://github.com/statamic/cms/issues/13266) by @jasonvarga
+- Fix `eloquent:import-users` command with computed values [#13260](https://github.com/statamic/cms/issues/13260) by @duncanmcclean
+- Fix page collection and mounted collection [#13250](https://github.com/statamic/cms/issues/13250) by @jasonvarga
+- French translations [#13300](https://github.com/statamic/cms/issues/13300) by @ebeauchamps
+- Bump validator from 13.15.20 to 13.15.22 [#13234](https://github.com/statamic/cms/issues/13234) by @dependabot
+- Bump qs from 6.11.1 to 6.14.1 [#13409](https://github.com/statamic/cms/issues/13409) by @dependabot
+
+
+
+## 5.70.0 (2025-12-03)
+
+### What's new
+- Pass original upload filename into `AssetUploaded` event [#11423](https://github.com/statamic/cms/issues/11423) by @daun
+- Allow statamic URLs to use fragments or query strings [#13085](https://github.com/statamic/cms/issues/13085) by @miicah
+- Add Glide Asset Cleared Event [#13004](https://github.com/statamic/cms/issues/13004) by @infabo
+
+### What's fixed
+- Performance Optimizations for Stache and Query Operations [#12894](https://github.com/statamic/cms/issues/12894) by @hastinbe
+- Avoid hardcoded nocache url in js [#13199](https://github.com/statamic/cms/issues/13199) by @JorisOrangeStudio
+- Fix nocache tag not replacing element correctly [#13177](https://github.com/statamic/cms/issues/13177) by @duncanmcclean
+- Date modifiers shouldn't return anything when value is empty [#13178](https://github.com/statamic/cms/issues/13178) by @duncanmcclean
+- Terms fieldtype: Only show "Allow Creating" option when using stack selector [#13151](https://github.com/statamic/cms/issues/13151) by @duncanmcclean
+- Ensure updated_at and updated_by is not null in TracksLastModified [#13099](https://github.com/statamic/cms/issues/13099) by @simonerd
+- Correct namespace in `FakesQueriesTest` [#13029](https://github.com/statamic/cms/issues/13029) by @duncanmcclean
+- Require url in nocache request [#12975](https://github.com/statamic/cms/issues/12975) by @Jade-GG
+- Fix HTML entities in currency translations [#12982](https://github.com/statamic/cms/issues/12982) by @duncanmcclean
+- Fix failing tests due to lowercase `utf-8` charset [#13213](https://github.com/statamic/cms/issues/13213) by @duncanmcclean
+- French translations [#13136](https://github.com/statamic/cms/issues/13136) by @ebeauchamps
+- Bump lowest composer constraints [#13037](https://github.com/statamic/cms/issues/13037) by @jasonvarga
+- Bump js-yaml from 3.14.1 to 3.14.2 [#13097](https://github.com/statamic/cms/issues/13097) by @dependabot
+
+
+
+## 5.69.0 (2025-11-06)
+
+### What's new
+- Support multiple sites on the search tag [#12923](https://github.com/statamic/cms/issues/12923) by @jasonvarga
+- Keep selects open if multiple is enabled [#12772](https://github.com/statamic/cms/issues/12772) by @godismyjudge95
+
+### What's fixed
+- Update currencies dictionary [#12960](https://github.com/statamic/cms/issues/12960) by @jasonvarga
+- Fix error when visiting expired LivePreview url [#12609](https://github.com/statamic/cms/issues/12609) by @waldemar-p
+- Fix term reference updates after slug change [#11058](https://github.com/statamic/cms/issues/11058) by @daun
+- Fix localized terms being returned incorrectly in the REST API [#11362](https://github.com/statamic/cms/issues/11362) by @duncanmcclean
+- Delete .babelrc [#12939](https://github.com/statamic/cms/issues/12939) by @duncanmcclean
+- Fix declarative shadow root elements inside nocache tags [#12929](https://github.com/statamic/cms/issues/12929) by @duncanmcclean
+- Revert "CP nav reordering fixes" [#12926](https://github.com/statamic/cms/issues/12926) by @duncanmcclean
+- Fix isset and empty on Values [#12865](https://github.com/statamic/cms/issues/12865) by @edalzell
+- Fix translations for `Regards` [#12969](https://github.com/statamic/cms/issues/12969) by @marcorieser
+- French translations [#12930](https://github.com/statamic/cms/issues/12930) by @ebeauchamps
+- French translations [#12959](https://github.com/statamic/cms/issues/12959) by @ebeauchamps
+
+
+
+## 5.68.0 (2025-10-30)
+
+### What's new
+- Add support for `whereHas()` etc to query builders [#8476](https://github.com/statamic/cms/issues/8476) by @ryanmitchell
+- Support whereHas etc in eloquent builder [#12773](https://github.com/statamic/cms/issues/12773) by @ryanmitchell
+- Add missing Stache Fake Query methods [#12885](https://github.com/statamic/cms/issues/12885) by @marcorieser
+- Set etags [#11441](https://github.com/statamic/cms/issues/11441) by @indykoning
+
+### What's fixed
+- Use attributes on term query builder tests, not comments [#12774](https://github.com/statamic/cms/issues/12774) by @ryanmitchell
+- Update `updated_at` and `updated_by` when duplicating an entry [#12777](https://github.com/statamic/cms/issues/12777) by @aerni
+- Fix edit form errors after change of term slug [#11056](https://github.com/statamic/cms/issues/11056) by @daun
+- Fix `bard_text` modifier adding unwanted spaces [#12855](https://github.com/statamic/cms/issues/12855) by @aerni
+- Detect imported fields by checking field value instead of config key [#12905](https://github.com/statamic/cms/issues/12905) by @el-schneider
+- Allow Cache Tags for POST requests [#12910](https://github.com/statamic/cms/issues/12910) by @marcorieser
+- Update entry URIs when collection route is changed [#11150](https://github.com/statamic/cms/issues/11150) by @duncanmcclean
+- Fix field config overrides being lost when ensuring referenced fields [#12915](https://github.com/statamic/cms/issues/12915) by @el-schneider
+- Bump validator from 13.9.0 to 13.15.20 [#12896](https://github.com/statamic/cms/issues/12896) by @dependabot
+
+
+
+## 5.67.0 (2025-10-16)
+
+### What's new
+- Ability to configure blueprint storage paths [#10639](https://github.com/statamic/cms/issues/10639) by @jacksleight
+- Added the ability for Protectors to allow static caching [#11542](https://github.com/statamic/cms/issues/11542) by @kingsven
+- Allow stache stores to be excluded from warming and clearing [#11830](https://github.com/statamic/cms/issues/11830) by @ryanmitchell
+- Provide search index name callback [#10435](https://github.com/statamic/cms/issues/10435) by @ajnsn
+- Add mount field to Collection type in GraphQL [#12607](https://github.com/statamic/cms/issues/12607) by @Skullsneeze
+- Throw exception if collection is queried after status [#12744](https://github.com/statamic/cms/issues/12744) by @jasonvarga
+- Allow adding of GraphQL mutations [#11908](https://github.com/statamic/cms/issues/11908) by @Skullsneeze
+
+### What's fixed
+- Normalize query string when creating nocache session [#11545](https://github.com/statamic/cms/issues/11545) by @duncanmcclean
+- CP nav reordering fixes [#11054](https://github.com/statamic/cms/issues/11054) by @jesseleite
+- Fix GraphQL error when field doesnt have type [#12757](https://github.com/statamic/cms/issues/12757) by @jasonvarga
+- Fix Bard entry links across domains [#12694](https://github.com/statamic/cms/issues/12694) by @edalzell
+- Update norwegian translations [#12714](https://github.com/statamic/cms/issues/12714) by @kjetilhole
+- Updating CP search to respect selected site. [#12704](https://github.com/statamic/cms/issues/12704) by @tommulroy
+- Registering a custom preset should update existing `Server` instance [#12660](https://github.com/statamic/cms/issues/12660) by @duncanmcclean
+
+
+
+## 5.66.0 (2025-10-03)
+
+### What's new
+- Ability to register custom image presets [#12624](https://github.com/statamic/cms/issues/12624) by @duncanmcclean
+- Add `isDefault` to `Site` [#12574](https://github.com/statamic/cms/issues/12574) by @edalzell
+- Add whereInId to EntryRepository [#11668](https://github.com/statamic/cms/issues/11668) by @nadinengland
+
+### What's fixed
+- Fix performance regression from 11863 [#12628](https://github.com/statamic/cms/issues/12628) by @simonworkhouse
+- Ensure HandleEntrySchedule uses the minute it was dispatched [#12626](https://github.com/statamic/cms/issues/12626) by @ryanmitchell
+- Select correct site when using multiple domains [#11042](https://github.com/statamic/cms/issues/11042) by @aerni
+- Changing Stache index name from collection to collectionHandle [#11324](https://github.com/statamic/cms/issues/11324) by @Krzemo
+- Prevent entry propagation when duplicating [#12186](https://github.com/statamic/cms/issues/12186) by @marcorieser
+- Italian translations [#12642](https://github.com/statamic/cms/issues/12642) by @ivanandre
+- Italian translations [#12643](https://github.com/statamic/cms/issues/12643) by @ivanandre
+- Norwegian translations [#12636](https://github.com/statamic/cms/issues/12636) by @Keuto
+
+
+
+## 5.65.2 (2025-09-24)
+
+### What's fixed
+- Prevent duplicate queries on collection structure [#12276](https://github.com/statamic/cms/issues/12276) by @ryanmitchell
+- Prevent caching during live preview [#12558](https://github.com/statamic/cms/issues/12558) by @helloiamlukas
+- Prevent empty cache tag when using Blade [#12567](https://github.com/statamic/cms/issues/12567) by @helloiamlukas
+- Fix incorrect blueprint being resolved on localizations [#11810](https://github.com/statamic/cms/issues/11810) by @duncanmcclean
+- Make asset GraphQL type always nullable [#11975](https://github.com/statamic/cms/issues/11975) by @lostgeek
+- Resolving PHP Warning and PHP Notice errors [#12257](https://github.com/statamic/cms/issues/12257) by @martinoak
+- Fix form submission search query [#12514](https://github.com/statamic/cms/issues/12514) by @duncanmcclean
+
+
+
+## 5.65.1 (2025-09-12)
+
+### What's fixed
+- Fix casing of "Edit Nav item" dropdown item [#12387](https://github.com/statamic/cms/issues/12387) by @duncanmcclean
+- Require `spatie/error-solutions` instead of `spatie/ignition` [#12385](https://github.com/statamic/cms/issues/12385) by @duncanmcclean
+- Allow `spatie/error-solutions` v1 [#12418](https://github.com/statamic/cms/issues/12418) by @jasonvarga
+- Bump axios from 1.8.2 to 1.12.0 [#12420](https://github.com/statamic/cms/issues/12420) by @dependabot
+
+
+
+## 5.65.0 (2025-09-08)
+
+### What's new
+- Make UpdateAssetReferences overwritable [#12283](https://github.com/statamic/cms/issues/12283) by @simonerd
+- Ability to opt into v6 asset folder permissions [#12060](https://github.com/statamic/cms/issues/12060) by @simonerd
+
+### What's fixed
+- Prevent PSR-4 warnings [#12347](https://github.com/statamic/cms/issues/12347) by @duncanmcclean
+- Corrects issue with unless conditions. [#12253](https://github.com/statamic/cms/issues/12253) by @JohnathonKoster
+- Fix blueprint blink cache issue [#12232](https://github.com/statamic/cms/issues/12232) by @aerni
+- Translate additional blueprint titles [#12242](https://github.com/statamic/cms/issues/12242) by @martyf
+- Dutch translations [#12212](https://github.com/statamic/cms/issues/12212) by @robdekort
+- Prevent null parse_url deprecation warning [#12197](https://github.com/statamic/cms/issues/12197) by @martinoak
+- Bump brace-expansion [#12072](https://github.com/statamic/cms/issues/12072) by @dependabot
+
+
+
+## 5.64.0 (2025-08-21)
+
+### What's new
+- Add `overlaps` and `doesnt_overlap` conditions and modifiers [#9491](https://github.com/statamic/cms/issues/9491) by @ryanmitchell
+- Support whereJsonOverlaps in query builders [#11112](https://github.com/statamic/cms/issues/11112) by @ryanmitchell
+- Support pluck() on eloquent query builder [#12027](https://github.com/statamic/cms/issues/12027) by @ryanmitchell
+- Show path when searching assets [#12032](https://github.com/statamic/cms/issues/12032) by @duncanmcclean
+
+### What's fixed
+- Prevent zeros being filtered out in Array fieldtype [#12039](https://github.com/statamic/cms/issues/12039) by @duncanmcclean
+- Cast numbers in list fieldtype [#11970](https://github.com/statamic/cms/issues/11970) by @duncanmcclean
+- Updated the Stache Store to not remove stache items that exist [#11863](https://github.com/statamic/cms/issues/11863) by @simonworkhouse
+- Fix Custom Set Icons not working if path contains a dot (.) [#11866](https://github.com/statamic/cms/issues/11866) by @andjsch
+- Antlers: Corrects parser error with shorthand array syntax [#12031](https://github.com/statamic/cms/issues/12031) by @JohnathonKoster
+- Dutch translations [#12059](https://github.com/statamic/cms/issues/12059) by @Jade-GG
+- Fix windows test [#12048](https://github.com/statamic/cms/issues/12048) by @duncanmcclean
+
+
+
+## 5.63.0 (2025-08-06)
+
+### What's new
+- Support multiple defaults for checkboxes fieldtype [#12021](https://github.com/statamic/cms/issues/12021) by @godismyjudge95
+
+### What's fixed
+- Ensure orderByDesc uses column() function in eloquent query builder [#12022](https://github.com/statamic/cms/issues/12022) by @ryanmitchell
+- Fix nav padding, only apply to last ul [#12024](https://github.com/statamic/cms/issues/12024) by @jackmcdade
+
+
+
+## 5.62.0 (2025-08-04)
+
+### What's new
+- Pass form_config to email view [#11417](https://github.com/statamic/cms/issues/11417) by @andjsch
+- Add user profile form tabs and sections [#11836](https://github.com/statamic/cms/issues/11836) by @AtmoFX
+- Ability to explicitly disable text fieldtype focus [#12011](https://github.com/statamic/cms/issues/12011) by @jasonvarga
+
+### What's fixed
+- Fix entry redirect to @child fails if no child exists [#11953](https://github.com/statamic/cms/issues/11953) by @MartinSpicka
+- Cast toggle fieldtype queryable value to boolean [#12019](https://github.com/statamic/cms/issues/12019) by @jasonvarga
+- Fix docs link in template fieldtype [#11990](https://github.com/statamic/cms/issues/11990) by @duncanmcclean
+- Fix incorrect boolean in eloquent whereNotBetween [#12005](https://github.com/statamic/cms/issues/12005) by @ryanmitchell
+- Fix assets:generate-presets command stdout [#12015](https://github.com/statamic/cms/issues/12015) by @0kyn
+- Fix asset styling in link fieldtype [#12016](https://github.com/statamic/cms/issues/12016) by @Jamesking56
+- Apply bottom padding to main nav [#12012](https://github.com/statamic/cms/issues/12012) by @daun
+
+
+
+## 5.61.0 (2025-07-25)
+
+### What's new
+- Allow static warm to use insecure by default with config key [#11978](https://github.com/statamic/cms/issues/11978) by @macaws
+
+### What's fixed
+- Escape redirect in user tag [#11999](https://github.com/statamic/cms/issues/11999) by @jasonvarga
+- Fix AddonTestCase path for Windows [#11994](https://github.com/statamic/cms/issues/11994) by @godismyjudge95
+- Bump form-data from 4.0.0 to 4.0.4 [#11979](https://github.com/statamic/cms/issues/11979) by @dependabot
+- Loosen up assertions in `ViteTest` [#11985](https://github.com/statamic/cms/issues/11985) by @duncanmcclean
+- Update security contact info [#11996](https://github.com/statamic/cms/issues/11996) by @duncanmcclean
+
+
+
+## 5.60.0 (2025-07-15)
+
+### What's new
+- Add command to clear asset_meta and asset_container_contents caches [#11960](https://github.com/statamic/cms/issues/11960) by @ryanmitchell
+
+### What's fixed
+- Addon Manifest improvements [#11948](https://github.com/statamic/cms/issues/11948) by @duncanmcclean
+- Licensing fixes [#11950](https://github.com/statamic/cms/issues/11950) by @duncanmcclean
+- Allow classes to extend Markdown Parser [#11946](https://github.com/statamic/cms/issues/11946) by @JohnathonKoster
+
+
+
+## 5.59.0 (2025-07-10)
+
+### What's new
+- Add optional fallback for missing keys in `{{ trans }}` tag [#11944](https://github.com/statamic/cms/issues/11944) by @daun
+- `resolve` modifier [#11890](https://github.com/statamic/cms/issues/11890) by @marcorieser
+- Allow fetching children of other entries in `{{ children }}` tag [#11922](https://github.com/statamic/cms/issues/11922) by @daun
+- Prompt to update search indexes when installing starter kits [#11924](https://github.com/statamic/cms/issues/11924) by @jesseleite
+
+### What's fixed
+- Use `app.locale` as fallback when there is no explicit site locale [#11939](https://github.com/statamic/cms/issues/11939) by @CasEbb
+- Check if sometimes rule is present before adding nonNull type [#11917](https://github.com/statamic/cms/issues/11917) by @TheBnl
+- Fix issue around spaces in git paths [#11933](https://github.com/statamic/cms/issues/11933) by @jesseleite
+- Fix active state for nav items with implicit children [#11937](https://github.com/statamic/cms/issues/11937) by @jesseleite
+- Fix visibility of custom nav items for users w/ limited permissions [#11930](https://github.com/statamic/cms/issues/11930) by @jesseleite
+- Fix group fieldtype child field validation rules when using {this} within a replicator/grid [#11931](https://github.com/statamic/cms/issues/11931) by @martyf
+- Relax strict type check in `Tree::move()` [#11927](https://github.com/statamic/cms/issues/11927) by @duncanmcclean
+- Prevent group fieldtype from filtering out `false` values [#11928](https://github.com/statamic/cms/issues/11928) by @duncanmcclean
+- Class "DB" not found issue [#11911](https://github.com/statamic/cms/issues/11911) by @leganz
+- Fix casing on dropdown item [#11907](https://github.com/statamic/cms/issues/11907) by @duncanmcclean
+- German translations [#11903](https://github.com/statamic/cms/issues/11903) by @helloDanuk
+
+
+
+## 5.58.1 (2025-06-25)
+
+### What's fixed
+- Fix Overflow buttons preview [#11891](https://github.com/statamic/cms/issues/11891) by @marcorieser
+- Revert detect recursion when augmenting Entries (#11854) [#11894](https://github.com/statamic/cms/issues/11894) by @JohnathonKoster
+- Add entry serialization test [#11900](https://github.com/statamic/cms/issues/11900) by @jasonvarga
+
+
+
+## 5.58.0 (2025-06-20)
+
+### What's new
+- Detect recursion when augmenting Entries [#11854](https://github.com/statamic/cms/issues/11854) by @JohnathonKoster
+- Add `hasField` method to `Fieldset` [#11882](https://github.com/statamic/cms/issues/11882) by @duncanmcclean
+- Estonian translations [#11886](https://github.com/statamic/cms/issues/11886) by @karlromets
+
+### What's fixed
+- Render markdown after antlers when smartypants is enabled [#11814](https://github.com/statamic/cms/issues/11814) by @ryanmitchell
+- Fix read-only state of roles and groups fields [#11867](https://github.com/statamic/cms/issues/11867) by @aerni
+- Fix files not being removed after cache has been cleared [#11873](https://github.com/statamic/cms/issues/11873) by @indykoning
+- Ensure nav blueprint graphql types are registered [#11881](https://github.com/statamic/cms/issues/11881) by @ryanmitchell
+- Fix issues with Blade nav tag compiler [#11872](https://github.com/statamic/cms/issues/11872) by @JohnathonKoster
+- Ensure propagating entries respects saveQuietly [#11875](https://github.com/statamic/cms/issues/11875) by @ryanmitchell
+- Fix authorization error when creating globals [#11883](https://github.com/statamic/cms/issues/11883) by @duncanmcclean
+- Fixes typo [#11876](https://github.com/statamic/cms/issues/11876) by @adampatterson
+- Updated `AddonServiceProvider::shouldBootRootItems()` to support trailing slashes [#11861](https://github.com/statamic/cms/issues/11861) by @simonworkhouse
+- Prevent null in strtolower() [#11869](https://github.com/statamic/cms/issues/11869) by @martinoak
+- Ensure Glide treats asset urls starting with the app url as internal assets [#11839](https://github.com/statamic/cms/issues/11839) by @marcorieser
+- Remove single quote in Asset upload  [#11858](https://github.com/statamic/cms/issues/11858) by @adampatterson
+
+
+
+## 5.57.0 (2025-06-04)
+
+### What's new
+- Added the option to add renderers to markdown parsers [#11827](https://github.com/statamic/cms/issues/11827) by @CapitaineToinon
+- Add renderer methods to `Markdown` facade docblock [#11845](https://github.com/statamic/cms/issues/11845) by @duncanmcclean
+- Add `not_in` parameter to Assets tag [#11820](https://github.com/statamic/cms/issues/11820) by @nopticon
+- Added `X-Statamic-Uncacheable` header to prevent responses being statically cached [#11817](https://github.com/statamic/cms/issues/11817) by @macaws
+
+### What's fixed
+- Throw 404 response when OAuth provider doesn't exist [#11844](https://github.com/statamic/cms/issues/11844) by @duncanmcclean
+- Fix edition check in outpost [#11843](https://github.com/statamic/cms/issues/11843) by @duncanmcclean
+- Updated Statamic references in language files [#11835](https://github.com/statamic/cms/issues/11835) by @tommulroy
+- Fix create/edit CP nav descendants not properly triggering active status [#11832](https://github.com/statamic/cms/issues/11832) by @jesseleite
+- Fix editability of nav items without content reference [#11822](https://github.com/statamic/cms/issues/11822) by @duncanmcclean
+- Entries fieldtype: Only show "Allow Creating" option when using stack selector [#11816](https://github.com/statamic/cms/issues/11816) by @duncanmcclean
+- French translations [#11826](https://github.com/statamic/cms/issues/11826) by @ebeauchamps
+- Added null check for fieldActions within replicator [#11828](https://github.com/statamic/cms/issues/11828) by @martyf
+- Perform null check on data in video fieldtype [#11821](https://github.com/statamic/cms/issues/11821) by @martyf
+- Added checks for `Closure` instances instead of `is_callable` inside `Route::statamic(...)` [#11809](https://github.com/statamic/cms/issues/11809) by @JohnathonKoster
+- Further increase trackDirtyState timeout [#11811](https://github.com/statamic/cms/issues/11811) by @simonerd
+
+
+
+## 5.56.0 (2025-05-20)
+
+### What's new
+- Add `moveQuietly` method to `Asset` class [#11804](https://github.com/statamic/cms/issues/11804) by @duncanmcclean
+- Add --header option to static warm command [#11763](https://github.com/statamic/cms/issues/11763) by @ChristianPraiss
+
+### What's fixed
+- Fix values being wrapped in arrays causing multiple selected options  [#11630](https://github.com/statamic/cms/issues/11630) by @simonworkhouse
+- Hide read only and computed fields in user creation wizard [#11635](https://github.com/statamic/cms/issues/11635) by @duncanmcclean
+- Fix storing submissions of forms with 'files' fieldtypes even when disabled [#11794](https://github.com/statamic/cms/issues/11794) by @andjsch
+- Corrects Antlers error logging with PHP nodes [#11800](https://github.com/statamic/cms/issues/11800) by @JohnathonKoster
+- Fix facade PhpDocs for better understanding by Laravel Idea [#11798](https://github.com/statamic/cms/issues/11798) by @adelf
+- Correct issue with nested noparse and partials [#11801](https://github.com/statamic/cms/issues/11801) by @JohnathonKoster
+- Prepare value & operator before passing to Eloquent Query Builder [#11805](https://github.com/statamic/cms/issues/11805) by @duncanmcclean
+
+
+
+## 5.55.0 (2025-05-14)
+
+### What's new
+- Middleware to redirect absolute domains ending in dot [#11782](https://github.com/statamic/cms/issues/11782) by @indykoning
+- Add `increment`/`decrement` methods to `ContainsData` [#11786](https://github.com/statamic/cms/issues/11786) by @duncanmcclean
+- Update GraphiQL [#11780](https://github.com/statamic/cms/issues/11780) by @duncanmcclean
+- Allow selecting entries from different sites within the link fieldtype [#10546](https://github.com/statamic/cms/issues/10546) by @justkidding96
+- Ability to select entries from all sites from Bard link [#11768](https://github.com/statamic/cms/issues/11768) by @edalzell
+
+### What's fixed
+- Ensure asset validation rules are returned as strings to GraphQL [#11781](https://github.com/statamic/cms/issues/11781) by @ryanmitchell
+- Asset validation rules as string in GraphQL, part 2 [#11790](https://github.com/statamic/cms/issues/11790) by @jasonvarga
+- Fix Term filter on entry listing not working when limiting to 1 term [#11735](https://github.com/statamic/cms/issues/11735) by @liucf
+- Fix filtering group fieldtype null values [#11788](https://github.com/statamic/cms/issues/11788) by @jacksleight
+- Clone internal data collections [#11777](https://github.com/statamic/cms/issues/11777) by @jacksleight
+- Fix creating terms in non-default sites [#11746](https://github.com/statamic/cms/issues/11746) by @duncanmcclean
+- Ensure `null` values are filtered out in dictionary field config [#11773](https://github.com/statamic/cms/issues/11773) by @duncanmcclean
+- Use deep copy of set's data in bard field [#11766](https://github.com/statamic/cms/issues/11766) by @faltjo
+- Dutch translations [#11783](https://github.com/statamic/cms/issues/11783) by @rinusvandam
+- PHPUnit: Use `#[Test]` attribute instead of `/** @test */` [#11767](https://github.com/statamic/cms/issues/11767) by @duncanmcclean
+
+
+
 ## 5.54.0 (2025-05-02)
 
 ### What's new
